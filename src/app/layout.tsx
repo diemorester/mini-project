@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import localfont from "next/font/local"
-import Navbar from "./_components/navbar";
+import localfont from "next/font/local";
+import Navbar from "./components/navbar";
+import ScrollTop from "./components/scrollTop";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,9 +48,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${pulang.variable} ${poetsen.variable} ${bogart.variable}`}>
+    <html
+      lang="en"
+      className={`${pulang.variable} ${poetsen.variable} ${bogart.variable}`}
+    >
       <body className={inter.className}>
-        <Navbar/>
+        <Navbar />
+        <ScrollTop />
         {children}
       </body>
     </html>

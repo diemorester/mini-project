@@ -11,7 +11,7 @@ export default function OverView() {
                 </div>
                 <div className="flex flex-wrap justify-center gap-6 rounded-sm">
                     <div className="relative">
-                        <div className="absolute inset-0 z-10 bg-[#d8d9d8] text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-65 duration-200 transition-all ease-out cursor-pointer rounded-[20px]">
+                        <div className="absolute inset-0 bg-[#d8d9d8] text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-65 duration-200 transition-all ease-out cursor-pointer rounded-[20px]">
                             <h2 className="font-poetsen text-2xl">Lollapalooza</h2>
                             {/* <p className="mx-auto px-3 pb-16 text-lg font-bold tracking-wider">Manglayang</p> */}
                             <p className="absolute bottom-12 font-poetsen text-sm">May 30th, 2025</p>
@@ -21,7 +21,7 @@ export default function OverView() {
                         </div>
                     </div>
                     <div className="relative">
-                        <div className="absolute inset-0 z-10 bg-[#d8d9d8] text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-65 duration-200 transition-all ease-out cursor-pointer rounded-[20px]">
+                        <div className="absolute inset-0 bg-[#d8d9d8] text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-65 duration-200 transition-all ease-out cursor-pointer rounded-[20px]">
                             <h3 className="font-poetsen text-2xl">Coachella</h3>
                             {/* <p className="mx-auto px-3 pb-16 text-lg font-bold tracking-wider">Manglayang</p> */}
                             <p className="absolute bottom-12 font-poetsen text-sm">Aug 8th, 2025</p>
@@ -31,7 +31,7 @@ export default function OverView() {
                         </div>
                     </div>
                     <div className="relative">
-                        <div className="absolute inset-0 z-10 bg-[#d8d9d8] text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-65 duration-200 transition-all ease-out cursor-pointer rounded-[20px]">
+                        <div className="absolute inset-0 bg-[#d8d9d8] text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-65 duration-200 transition-all ease-out cursor-pointer rounded-[20px]">
                             <h3 className="font-poetsen text-2xl">Wacken Open Air</h3>
                             {/* <p className="mx-auto px-3 pb-16 text-lg font-bold tracking-wider">Manglayang</p> */}
                             <p className="absolute bottom-12 font-poetsen text-sm">Dec 24th, 2025</p>
