@@ -8,8 +8,8 @@ import { IoIosClose } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
-  { href: "/Home", text: "Home" },
-  { href: "/Festival", text: "Festivals" },
+  { href: "/", text: "Home" },
+  { href: "/festival", text: "Festivals" },
   { href: "/Galery", text: "Gallery" },
   { href: "/Contact", text: "Contact" },
 ];
