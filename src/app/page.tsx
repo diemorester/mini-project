@@ -1,5 +1,5 @@
-import OverView from "./_components/overview";
-import Ticket from "./_components/ticket";
+import OverView from "./(home)/_components/overview";
+import Ticket from "./(home)/_components/ticket";
 
 export default function Home() {
   return (
