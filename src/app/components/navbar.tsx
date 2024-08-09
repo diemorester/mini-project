@@ -8,8 +8,8 @@ import { IoIosClose } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
-  { href: "/Home", text: "Home" },
-  { href: "/Festival", text: "Festivals" },
+  { href: "/", text: "Home" },
+  { href: "/festival", text: "Festivals" },
   { href: "/Galery", text: "Gallery" },
   { href: "/Contact", text: "Contact" },
 ];
@@ -101,13 +101,16 @@ export default function Navbar() {
               }}
               className="fixed md:hidden top-0 right-0 w-3/5 md:w-1/2   h-full bg-white shadow-lg z-20" // sidebar backgroundnya
             >
+              <Link href="/festival">
+              
               <button
                 onClick={toggleSidebar}
                 className="absolute top-4 right-4 text-5xl text-black"
               >
                 <IoIosClose />
               </button>
-              <div className="flex flex-col items-start px-6 py-16 font-bogart font-semibold text-black gap-5">
+              </Link>
+              <div className="flex flex-col items-start px-6 py-16 font-semibold text-black gap-5">
                 {links.map((
                   link // konten sidebar nge map dari list di atas
                 ) => (
@@ -126,7 +129,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
       <nav
-        className={`bg-white h-[100px] font-bogart font-semibold flex-wrap w-full flex items-center justify-between px-20 py-auto fixed top-0 z-10 ${
+        className={`bg-white h-[100px] font-semibold flex-wrap w-full flex items-center justify-between px-20 py-auto fixed top-0 z-10 ${
           // navbar utama
           isScrolled // kalau scroll, navbar timbul dan sticky
             ? "bg-opacity-100 transition-[background-color] ease-in duration-300 drop-shadow-md text-black"
