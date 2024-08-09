@@ -1,37 +1,22 @@
-import OverView from "./_components/overview";
-import Ticket from "./_components/ticket";
+import Marquee from "react-fast-marquee";
+import Events from "./_components/events";
+import SearchBar from "./_components/searchBar";
 
 export default function Home() {
   return (
-    <div className="w-full bg-stone-50 text-[#000001]">
-      {/* <div className="max-w-[1000px] mx-auto">
-        <div className="text-center place-content-center">
-          <h1 className="font-pulang text-7xl">the sept.</h1>
-          <p className="font-pulang text-2xl">the pilgrimage place of gigs, festival, events,</p>
-          <p className="font-pulang text-2xl">and everything fun</p>
-        </div>
-        <OverView />
-      </div> */}
-      <div
-        className="hero min-h-screen"
-        style={{
-          backgroundImage: "url(/images/hero.jpg)",
-        }}>
-        <div className="hero-overlay bg-opacity-60"></div>
-        <div className="hero-content text-neutral-content text-center">
-          <div className="max-w-md text-stone-50">
-            <h1 className="mb-5 text-5xl font-pulang">the sept.</h1>
-            <p className="font-pulang">
-            the pilgrimage place of gigs, festival, events,
-            </p>
-            <p className="mb-5 font-pulang">
-            and everything fun.
-            </p>
+    <div className="w-full">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="h-[600px] sm:h-screen relative bg-sept-black overflow-hidden">
+          <h1 className="absolute bottom-[27%] sm:bottom-[43%] z-10 text-sept-white text-2xl sm:text-6xl px-8">[ The Sept.  ]</h1>
+          <div className="absolute bottom-0 sm:-bottom-20 w-screen">
+            <Marquee autoFill gradient gradientColor="#131313" gradientWidth={100} className="text-[100px] sm:text-[400px] font-semibold text-sept-white h-fit">
+              YOURPILGRIMAGEPLACEFORFUN
+            </Marquee>
           </div>
         </div>
+        <SearchBar />
+        <Events />
       </div>
-      <OverView />
-      <Ticket />
     </div>
   );
 }
