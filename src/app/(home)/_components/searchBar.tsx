@@ -5,7 +5,7 @@ export default function SearchBar() {
         <div className="w-full bg-sept-black block">
             <div className='max-w-[1400px] mx-auto'>
                 <form className='relative'>
-                    <div className='relative'>
+                    <div className='relative z-10'>
                         <input type='search' placeholder='[ search everything here . . . ]' className='w-full h-[69px] sm:h-[150px] bg-sept-green
                         text-lg sm:text-5xl text-center px-6 text-sept-white border-0' />
                     </div>

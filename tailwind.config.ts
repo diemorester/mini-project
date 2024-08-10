@@ -15,6 +15,16 @@ const config: Config = {
         'sept-purple': "#8A1EC6",
         'sept-white': "#F9F6EE"
       },
+      animation: {
+        'spin-slow': "spin 15s linear infinite",
+        'spin-slow-reversed': "reversed 15s linear infinite"
+      },
+      keyframes: {
+        'reversed': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(-360deg)' },
+        }
+      },
     },
   },
   plugins: [require("daisyui")],
