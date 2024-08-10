@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import localfont from "next/font/local";
 import Navbar from "./components/navbar";
 import ScrollTop from "./components/scrollTop";
 
