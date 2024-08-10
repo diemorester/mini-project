@@ -1,9 +1,8 @@
-import React from "react"
 
-export default function Festival() {
+export default function Festivals() {
     return (
-        <div className="">
-            salam kokop
+        <div>
+            gw kokop loe
         </div>
     )
 }
