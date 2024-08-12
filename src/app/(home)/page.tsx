@@ -4,6 +4,7 @@ import { motion, useAnimation } from "framer-motion";
 import Marquee from "react-fast-marquee";
 import SearchBar from "./_components/searchBar";
 import Events from "./_components/events";
+import PrevEvents from "./_components/prevEvents";
 
 export default function Home() {
   const controls = useAnimation();
@@ -67,6 +68,7 @@ export default function Home() {
         </motion.div>
       </div>
       <Events />
+      <PrevEvents />
     </div>
   );
 }
