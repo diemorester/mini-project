@@ -3,11 +3,9 @@ import Link from 'next/link'
 
 export default function Events() {
     return (
-        <div className="w-full">
-            <div className="max-w-[1400px] mx-auto">
                 <div className="bg-sept-black relative overflow-hidden">
-                    <h1 className="h-[250px] text-sept-white text-2xl sm:text-6xl px-8 place-content-center z-20">[ OUR UPCOMING EVENTS. ]</h1>
-                    <svg className='absolute z-0 -right-[250px] -top-72 fill-sept-purple animate-spin-slow-reversed' xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 2048 1280">
+                    <h1 className="h-[250px] text-sept-white text-2xl sm:text-6xl px-8 place-content-center z-20">[&nbsp;OUR UPCOMING EVENTS. &nbsp;]</h1>
+                    <svg className='absolute max-sm:hidden z-0 right-0 top-3 fill-sept-purple animate-spin-slow-reversed' xmlns="http://www.w3.org/2000/svg" width="380" height="380" viewBox="0 0 2048 1280">
                         <path d="m1021 32 12 2 8 7 4 8 3 15 7 46 8 54 8 52 11 69 11 72 7 45 4 11 4 5 7 4 5 1h7l10-4 17-12 21-16 57-42 18-13 76-56 18-13 38-28 36-26 9-6 6-2h12l6 3 5 4 5 10v11l-6 11-26 36-12 16-12 17-13 17-10 14-14 19-13 18-12 16-13 18-14 19-13 18-14 19-12 16-28 38-5 10-1 4v7l3 9 2 4 10 5 22 4 309 48 28 5 10 6 5 8 1 3v11l-5 9-6 5-9 3-83 13-125 19-82 13-59 9-11 4-5 5-3 4-2 8 1 10 5 10 10 13 13 18 42 57 13 18 28 38 13 18 42 57 13 18 14 19 10 14 11 16 3 6v12l-6 10-10 6-8 1-10-3-12-8-19-14-16-12-19-14-18-13-38-28-18-13-38-28-18-13-16-12-38-28-18-13-20-15-9-4-4-1h-7l-9 4-5 5-4 9-4 22-10 64-7 45-8 51-8 53-7 46-10 68-4 13-4 5-10 5h-13l-6-3-5-5-4-6-3-16-11-72-15-98-14-91-12-76-3-10-4-6-5-4-9-3h-7l-9 4-10 7-16 12-11 8-18 13-21 16-17 12-20 15-18 13-19 14-18 13-12 9-14 10-12 9-11 8-19 14-34 25-17 12-9 4h-12l-8-4-6-8-3-9 2-10 7-11 26-36 12-16 28-38 10-14 14-19 13-18 12-16 14-19 13-18 28-38 13-18 10-13 12-17 4-8 1-3v-8l-4-11-6-5-11-4-33-5-64-10-76-12-173-26-10-3-6-4-6-8-2-7 1-8 4-8 7-6 8-3 56-9 297-46 9-4 7-8 2-7v-8l-4-10-14-19-9-12-13-18-14-19-12-16-13-18-14-19-13-18-12-16-13-18-42-57-26-36-14-19-5-10-1-7 3-10 7-8 6-3 7-1 10 2 11 7 19 14 18 13 57 42 18 13 38 28 18 13 19 14 16 12 76 56 8 4 4 1h7l10-4 6-7 3-7 9-56 16-102 7-43 13-89 8-52 3-15 4-8 8-6z" />
                     </svg>
                     <svg className='absolute fill-sept-purple animate-spin-slow z-0' xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 2048 2048">
@@ -38,15 +36,14 @@ export default function Events() {
                         </div>
                     </div>
                     <div className='flex relative items-center gap-2 mt-16 z-10'>
-                        <p className='italic text-2xl sm:text-4xl font-bold text-sept-white absolute right-[11%]'>SYNCHRONIZE.</p>
+                        <p className='italic text-2xl sm:text-4xl font-bold text-sept-white absolute right-[11%] z-20'>SYNCHRONIZE.</p>
                         <span className='bg-sept-white w-[10%] h-3 absolute right-0'></span>
                     </div>
                     <div className='flex relative items-center gap-2 mt-16'>
-                        <p className='italic text-2xl sm:text-4xl font-bold text-sept-white absolute left-[11%]'>HAMMERSONIC.</p>
+                        <p className='italic text-2xl sm:text-4xl font-bold text-sept-white absolute left-[11%] z-20'>HAMMERSONIC.</p>
                         <span className='bg-sept-white w-[10%] h-3 absolute'></span>
                     </div>
+                    <div className=''></div>
                 </div>
-            </div>
-        </div>
     )
 }
