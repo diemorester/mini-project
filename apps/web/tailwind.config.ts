@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'noise': "url('/bg-noise.png')",
+      },
       colors: {
         "sept-green": "#3BB556",
         "sept-black": "#131313",
@@ -18,8 +21,13 @@ const config: Config = {
       animation: {
         "spin-slow": "spin 15s linear infinite",
         "spin-slow-reversed": "reversed 15s linear infinite",
+        "shift": "shift 0.2s linear infinite both",
       },
       keyframes: {
+        shift: {
+          "0%": { transform: "translateX(1%) translateY(1%)" },
+          "100%": { transform: "translateX(-1%) translateY(-1%)" },
+        },
         reversed: {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(-360deg)" },

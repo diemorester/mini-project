@@ -8,7 +8,7 @@ import PrevEvents from "./_components/prevEvents";
 
 export default function Home() {
   const controls = useAnimation();
-  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("down");
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
   const [lastScrollY, setLastScrollY] = useState(0);
   const searchBarRef = useRef(null);
 
