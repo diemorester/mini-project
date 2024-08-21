@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import ModalSign from "./modalsign";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosClose } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
@@ -122,7 +121,7 @@ export default function Navbar() {
                     {link.text}
                   </Link>
                 ))}
-                <ModalSign ButtonComponent={LoginTextButton} />
+                {/* <ModalSign ButtonComponent={LoginTextButton} /> */}
               </div>
             </motion.div>
           </>
@@ -147,7 +146,7 @@ export default function Navbar() {
           ))}
         </div>
         <div className="flex items-center">
-          <ModalSign ButtonComponent={loginButton} />
+          {/* <ModalSign ButtonComponent={loginButton} /> */}
           <div className="flex md:hidden">
             <button
               onClick={toggleSidebar} // button buat toggle sidebar/hamburger

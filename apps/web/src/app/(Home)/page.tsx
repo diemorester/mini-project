@@ -9,25 +9,28 @@ import PrevEvents from "./_components/prevEvents";
 export default function Home() {
   const controls = useAnimation();
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const searchBarRef = useRef(null);
+  const searchBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY) {
+      const searchBarPosition =
+        searchBarRef.current?.getBoundingClientRect().top || 0;
+
+      if (currentScrollY > searchBarPosition) {
         setScrollDirection("down");
-      } else {
+        console.log("down");
+      } else if (currentScrollY < searchBarPosition) {
         setScrollDirection("up");
+        console.log("up");
       }
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, []);
 
   useEffect(() => {
     if (scrollDirection === "down") {
