@@ -36,7 +36,7 @@ export default function Events() {
             </p>
           </div>
           <div className="absolute bottom-6 right-[30%]">
-            <Link href="/" className="">
+            <Link href="/festival" className="">
               <button
                 className='relative overflow-hidden text-3xl italic text-sept-green
                                     z-[3] bg-transparent transition-colors before:absolute before:left-0 before:top-0 before:-z-10

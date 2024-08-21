@@ -2,9 +2,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import Marquee from "react-fast-marquee";
-import SearchBar from "./_components/searchBar";
 import Events from "./_components/events";
 import PrevEvents from "./_components/prevEvents";
+import SearchBar from "@/components/searchBar";
+import WhyUs from "./_components/whyus";
+import PromotionOne from "./_components/promotionOne";
 
 export default function Home() {
   const controls = useAnimation();
@@ -69,6 +71,8 @@ export default function Home() {
       </div>
       <Events />
       <PrevEvents />
+      <PromotionOne />
+      <WhyUs />
     </div>
   );
 }
