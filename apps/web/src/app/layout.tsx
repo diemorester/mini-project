@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
-import ScrollTop from "@/components/scrollTop";
 import BackgroundNoise from "@/components/backgroundNoise";
+import ProNavbar from "@/components/pronavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <BackgroundNoise />
-        {/* <Navbar />
-        <ScrollTop /> */}
+        <ProNavbar />
+        {/* <Navbar /> */}
+        {/* <ScrollTop /> */}
         {children}
       </body>
     </html>

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function PrevEvents() {
   return (
-    <div className="bg-sept-purple h-auto">
+    <div id="prev" className="bg-sept-purple h-auto">
       <h1 className="h-[250px] text-sept-white text-2xl sm:text-6xl z-30 px-8 place-content-center">
         [&nbsp;OUR PREVIOUS EVENTS. &nbsp;]
       </h1>
