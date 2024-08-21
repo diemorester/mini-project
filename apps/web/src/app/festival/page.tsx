@@ -1,3 +1,10 @@
+import Filter from "./_components/filter";
+
 export default function Festivals() {
-  return <div>gw kokop loe</div>;
+    return (
+        <div>
+            <Filter />
+            
+        </div>
+    )
 }

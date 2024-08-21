@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function PrevEvents() {
   return (
-    <div className="bg-sept-purple h-auto">
+    <div id="prev" className="bg-sept-purple h-auto">
       <h1 className="h-[250px] text-sept-white text-2xl sm:text-6xl z-30 px-8 place-content-center">
         [&nbsp;OUR PREVIOUS EVENTS. &nbsp;]
       </h1>
@@ -17,11 +17,11 @@ export default function PrevEvents() {
               alt="gigs1"
               width={425}
               height={600}
-              className="w-[425px] h-[600px] lg:w-[550px] lg:h-[750px]"
+              className="w-[425px] h-[600px] 2xl:w-[550px] 2xl:h-[750px]"
             />
           </div>
           <svg
-            className="fill-sept-white absolute z-50 -top-[9%] -right-[14%] animate-spin-slow-reversed lg:w-[150px] lg:h-[150px]"
+            className="fill-sept-white absolute z-50 -top-[9%] -right-[14%] animate-spin-slow-reversed 2xl:w-[150px] 2xl:h-[150px]"
             xmlns="http://www.w3.org/2000/svg"
             width="100"
             height="100"
@@ -42,7 +42,7 @@ export default function PrevEvents() {
               alt="gigs2"
               width={425}
               height={600}
-              className="w-[425px] h-[600px] lg:w-[550px] lg:h-[750px]"
+              className="w-[425px] h-[600px] 2xl:w-[550px] 2xl:h-[750px]"
             />
           </div>
         </div>
@@ -54,7 +54,7 @@ export default function PrevEvents() {
           </div>
           <div>
             <Image
-              className="w-[425px] h-[600px] lg:w-[550px] lg:h-[750px]"
+              className="w-[425px] h-[600px] 2xl:w-[550px] 2xl:h-[750px]"
               src="/images/festival6.jpg"
               alt="gigs3"
               width={425}
