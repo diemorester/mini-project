@@ -6,7 +6,7 @@ export default function PrevEvents() {
       <h1 className="h-[250px] text-sept-white text-2xl sm:text-6xl z-30 px-8 place-content-center">
         [&nbsp;OUR PREVIOUS EVENTS. &nbsp;]
       </h1>
-      <div className="flex flex-wrap gap-6 mx-3 relative pb-[100px] justify-center ">
+      <div className="flex flex-wrap gap-6 mx-3 relative justify-center ">
         <div className="relative z-20">
           <div className="absolute inset-0 z-10 bg-sept-gray text-center opacity-100 hover:opacity-0 bg-opacity-65 duration-200 transition-all ease-out cursor-pointer">
             <h2 className="text-sept-white text-5xl pt-9">JAVA JAZZ.</h2>

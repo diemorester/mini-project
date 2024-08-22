@@ -1,12 +1,10 @@
-import LoginModal from "@/components/loginmodal";
-import RegisterModal from "@/components/registermodal";
+import Filter from "./_components/filter";
 
 export default function Festivals() {
-  return (
-    <div>
-      gw kokop loe
-      <LoginModal />;
-      <RegisterModal />;
-    </div>
-  );
+    return (
+        <div>
+            <Filter />
+            
+        </div>
+    )
 }

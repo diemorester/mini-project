@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "daisyui/dist/full.css";
 import ContinueWith from "./continuewith";
+import RegisterModal from "./registermodal";
 
 export default function LoginModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -101,7 +102,10 @@ export default function LoginModal() {
               <div>Forget Password?</div>
               <div className="divider" />
             </div>
-          <div className="text-center"> Not registered? Register here</div>
+          <div className="text-center"> Not registered?
+            <RegisterModal />
+
+            </div>
           </div>
         </div>
       )}
