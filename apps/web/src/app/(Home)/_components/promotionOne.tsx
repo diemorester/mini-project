@@ -14,10 +14,11 @@ export default function PromotionOne() {
         const scrollTop =
           window.scrollY || document.documentElement.scrollTop;
 
-        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-          controls.start("visible");
-        } else if (scrollTop < lastScrollTop) {
+        if (rect.top >= 0) {
           controls.start("hidden");
+        } else {
+          
+          controls.start("visible");
         }
 
         setLastScrollTop(scrollTop);

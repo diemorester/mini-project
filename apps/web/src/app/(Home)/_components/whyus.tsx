@@ -14,17 +14,19 @@ const WhyUs = () => {
         const rect = ref.current.getBoundingClientRect();
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+        
+        if (rect.top >= 0) {
+         
+          controls.start("hidden");
+          setShowFullText(false);
+          setShowColoredText(false);
+        } else {
           controls.start("visible").then(() => {
             setTimeout(() => {
               setShowFullText(true);
               setShowColoredText(true);
             }, 600);
           });
-        } else if (scrollTop < lastScrollTop) {
-          controls.start("hidden");
-          setShowFullText(false);
-          setShowColoredText(false);
         }
 
         setLastScrollTop(scrollTop);
@@ -56,7 +58,7 @@ const WhyUs = () => {
 
   const textVariants = {
     hidden: (direction: string) => ({
-      x: direction === "left" ? "-100vw" : "100vw",
+      x: direction === "left" ? -100 : 100,
       opacity: 0,
     }),
     visible: {
@@ -133,7 +135,7 @@ const WhyUs = () => {
           className="text-center"
           transition={{ delay: 0.8 }}
         >
-          INTO A &nbsp;
+          &emsp; &nbsp;INTO A &nbsp;
           {showColoredText && renderTypewriterText("TREND", "text-sept-purple")}
         </motion.p>
       </div>
