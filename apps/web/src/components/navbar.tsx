@@ -1,168 +1,81 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+
 import Link from "next/link";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IoIosClose } from "react-icons/io";
-import { motion, AnimatePresence } from "framer-motion";
-
-const links = [
-  { href: "/", text: "Home" },
-  { href: "/festival", text: "Festivals" },
-  { href: "/Galery", text: "Gallery" },
-  { href: "/Contact", text: "Contact" },
-];
-
-interface ButtonProps {
-  onClick: () => void;
-}
-const loginButton = ({ onClick }: ButtonProps) => (
-  <button
-    onClick={onClick}
-    className="hidden md:block relative overflow-hidden w-[100px] h-[50px] rounded-3xl z-20 border-[#cd96c1] bg-black py-2 px-5 text-stone-50 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-top-left before:scale-x-0 before:bg-[#cd96c1] before:rounded-md before:transition-transform before:duration-300 before:content-[''] before:hover:scale-x-100"
-  >
-    Log In
-  </button>
-);
-
-const LoginTextButton = ({ onClick }: ButtonProps) => (
-  <span onClick={onClick} className="py-2 cursor-pointer">
-    Login
-  </span>
-);
+import { useState } from "react";
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const sidebarRef = useRef<HTMLDivElement>(null); // ref buat ngecek kalo ngeklik diluar sidebar
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll); // event listener buat ngecek scroll
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      sidebarRef.current &&
-      !sidebarRef.current.contains(event.target as HTMLElement) // cek kalo ngeklik diluar sidebar
-    ) {
-      setIsSidebarOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isSidebarOpen) {
-      document.body.classList.add("overflow-hidden"); // ngasih body classlist buat ngehilangin scroll
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.body.classList.remove("overflow-hidden");
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isSidebarOpen]);
+  const handleClose = () => setIsOpen(false);
 
   return (
-    <>
-      <AnimatePresence>
-        {isSidebarOpen && (
-          <>
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 100, damping: 20 }}
-              className="fixed md:hidden inset-0 bg-black bg-opacity-50 z-20" // backdrop sidebarnya
-            />
-            <motion.div
-              ref={sidebarRef}
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{
-                type: "spring",
-                stiffness: 100,
-                damping: 20,
-                delay: 0.2,
-              }}
-              className="fixed md:hidden top-0 right-0 w-3/5 md:w-1/2   h-full bg-white shadow-lg z-20" // sidebar backgroundnya
-            >
-              <Link href="/festival">
-              
-              <button
-                onClick={toggleSidebar}
-                className="absolute top-4 right-4 text-5xl text-black"
-              >
-                <IoIosClose />
-              </button>
-              </Link>
-              <div className="flex flex-col items-start px-6 py-16 font-semibold text-black gap-5">
-                {links.map((
-                  link // konten sidebar nge map dari list di atas
-                ) => (
-                  <Link
-                    key={link.text}
-                    href={link.href}
-                    className="py-2 hover:scale-110"
-                  >
-                    {link.text}
-                  </Link>
-                ))}
-                {/* <ModalSign ButtonComponent={LoginTextButton} /> */}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-      <nav
-        className={`bg-white h-[100px] font-semibold flex-wrap w-full flex items-center justify-between px-20 py-auto fixed top-0 z-10 ${
-          // navbar utama
-          isScrolled // kalau scroll, navbar timbul dan sticky
-            ? "bg-opacity-100 transition-[background-color] ease-in duration-300 drop-shadow-md text-black"
-            : "bg-opacity-0 transition-[background-color] ease-out duration-300 text-stone-50"
+    <div>
+      <div className="fixed bg-transparent text-sept-white w-screen h-[100px] text-lg sm:text-5xl z-[999] font-bold flex justify-between p-10 items-center">
+        <div
+          id="text"
+          className=" hover:text-sept-green"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {!isOpen ? (
+            <button className="z-50">Menu</button>
+          ) : (
+            <button>Close</button>
+          )}
+        </div>
+        <div className=" hover:text-sept-green">
+          <button className="z-50">Login</button>
+        </div>
+      </div>
+      <div
+        className={`fixed transition-all ease-in-out duration-700 z-40 ${
+          isOpen
+            ? "bg-sept-gray h-screen w-screen"
+            : "h-0 w-screen overflow-hidden"
         }`}
       >
-        <div className="flex items-center">
-          <Image src="/vercel.svg" alt="logo" width={100} height={100} />
-        </div>
-        <div className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
-            <Link key={link.text} href={link.href} className="hover:scale-110">
-              {link.text}
-            </Link>
-          ))}
-        </div>
-        <div className="flex items-center">
-          {/* <ModalSign ButtonComponent={loginButton} /> */}
-          <div className="flex md:hidden">
-            <button
-              onClick={toggleSidebar} // button buat toggle sidebar/hamburger
-              className="text-2xl text-black"
+        <div
+          className={`flex flex-col w-full absolute bottom-[30%] text-6xl px-8 transition-opacity duration-700 ${
+            isOpen ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div>
+            <Link
+              href="/"
+              className="text-sept-white hover:text-sept-green"
+              onClick={handleClose}
             >
-              {isSidebarOpen ? (
-                ""
-              ) : (
-                <RxHamburgerMenu
-                  className={`${isScrolled ? "text-black" : "text-white"} `}
-                />
-              )}
-            </button>
+              HOME
+            </Link>
+          </div>
+          <div>
+            <Link
+              href="/#why"
+              className="text-sept-white hover:text-sept-green"
+              onClick={handleClose}
+            >
+              WHY US
+            </Link>
+          </div>
+          <div>
+            <Link
+              href="/festival"
+              className="text-sept-white hover:text-sept-green"
+              onClick={handleClose}
+            >
+              FESTIVAL
+            </Link>
+          </div>
+          <div>
+            <Link
+              href="/#prev"
+              className="text-sept-white hover:text-sept-green"
+              onClick={handleClose}
+            >
+              PAST EVENTS
+            </Link>
           </div>
         </div>
-      </nav>
-    </>
+      </div>
+    </div>
   );
 }

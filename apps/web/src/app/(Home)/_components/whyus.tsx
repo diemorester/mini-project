@@ -1,70 +1,144 @@
-"use client"
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
 
-import { useAnimation, useInView, useScroll, useTransform, motion, MotionValue } from "framer-motion";
-import { useEffect, useRef } from "react"
+const WhyUs = () => {
+  const controls = useAnimation();
+  const ref = useRef<HTMLDivElement>(null);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const [showFullText, setShowFullText] = useState(false);
+  const [showColoredText, setShowColoredText] = useState(false);
 
-export default function WhyUs() {
-    // const containerRef = useRef(null);
-    // const isInView = useInView(containerRef, { once: true })
-    // const mainControls = useAnimation()
+  useEffect(() => {
+    const handleScroll = () => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-    // const { scrollYProgress }: { scrollYProgress: MotionValue<number> } = useScroll({
-    //     target: containerRef,
-    //     offset: ["start end", "end start"],
-    // });
+        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+          controls.start("visible").then(() => {
+            setTimeout(() => {
+              setShowFullText(true);
+              setShowColoredText(true);
+            }, 600);
+          });
+        } else if (scrollTop < lastScrollTop) {
+          controls.start("hidden");
+          setShowFullText(false);
+          setShowColoredText(false);
+        }
 
-    // const fromLeft: MotionValue<string> = useTransform(
-    //     scrollYProgress,
-    //     [0, 1],
-    //     ["-100%", "0%"]
-    // );
+        setLastScrollTop(scrollTop);
+      }
+    };
 
-    // const fromRight: MotionValue<string> = useTransform(
-    //     scrollYProgress,
-    //     [0, 1],
-    //     ["100%", "0%"]
-    // );
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [controls, lastScrollTop]);
 
-    // useEffect(() => {
-    //     if (isInView) {
-    //         mainControls.start("visible")
-    //     }
-    // }, [isInView])
+  const renderTypewriterText = (text: string, className: string) => (
+    <span className={`typewriter ${className}`}>
+      {text.split("").map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: index * 0.1 }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </span>
+  );
 
-    return (
-        <div id="why">
-            <div
-                className="w-full h-[150px] sm:h-[250px] bg-sept-black text-sept-white px-8 place-content-center text-3xl sm:text-7xl">
-                <h1 className="">[&nbsp;&nbsp;
-                    <span className="text-sept-green">
-                        WHY
-                    </span>
-                    &nbsp; US.&emsp; &emsp; &nbsp;]</h1>
-            </div>
-            <div className="text-3xl sm:text-7xl text-sept-white bg-sept-black p-5 relative font-semibold py-[100px]">
-                <p
-                    // style={{translateX: fromLeft}}
-                    className="text-center">WE&nbsp;
-                    <span className="text-red-500">
-                        SPICE
-                    </span>
-                    &nbsp;UP</p>
-                <p
-                    // style={{translateX: fromRight}}
-                    className="text-left sm:pl-52">YOUR&nbsp;
-                    <span className="text-sept-green">
-                        EVENTS
-                    </span>
-                </p>
-                <p
-                    // style={{translateX: fromLeft}}
-                    className="text-center">AND MAKE IT</p>
-                <p className="text-center pl-5 sm:pl-20">INTO A&nbsp;
-                    <span className="text-sept-purple">
-                        TREND
-                    </span>
-                </p>
-            </div>
-        </div>
-    )
-}
+  const getRandomDirection = () => (Math.random() > 0.5 ? "left" : "right");
+
+  const textVariants = {
+    hidden: (direction: string) => ({
+      x: direction === "left" ? "-100vw" : "100vw",
+      opacity: 0,
+    }),
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 30, damping: 20, duration: 1 },
+    },
+  };
+
+  return (
+    <div id="why" ref={ref}>
+      <div className="w-full transition-all ease-in-out duration-300 h-[150px] sm:h-[250px] bg-sept-black text-sept-white px-8 place-content-center text-3xl sm:text-7xl">
+        <motion.h1
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1 } },
+          }}
+        >
+          [
+          {showFullText ? (
+            <>
+              &nbsp;&nbsp;
+              {showColoredText &&
+                renderTypewriterText("WHY", "text-sept-green")}
+              &nbsp; US.&emsp; &emsp; &nbsp;
+            </>
+          ) : (
+            "US"
+          )}
+          ]
+        </motion.h1>
+      </div>
+      <div className="text-3xl sm:text-7xl text-sept-white bg-sept-black p-5 relative font-semibold py-[100px]">
+        <motion.p
+          custom={getRandomDirection()}
+          initial="hidden"
+          animate={controls}
+          variants={textVariants}
+          className="text-center"
+          transition={{ delay: 0.2 }}
+        >
+          WE&nbsp;
+          {showColoredText && renderTypewriterText("SPICE", "text-red-500")}
+          &nbsp;UP
+        </motion.p>
+        <motion.p
+          custom={getRandomDirection()}
+          initial="hidden"
+          animate={controls}
+          variants={textVariants}
+          className="text-left sm:pl-52"
+          transition={{ delay: 0.4 }}
+        >
+          YOUR&nbsp;
+          {showColoredText && renderTypewriterText("EVENTS", "text-sept-green")}
+        </motion.p>
+        <motion.p
+          custom={getRandomDirection()}
+          initial="hidden"
+          animate={controls}
+          variants={textVariants}
+          className="text-center"
+          transition={{ delay: 0.6 }}
+        >
+          AND MAKE IT
+        </motion.p>
+        <motion.p
+          custom={getRandomDirection()}
+          initial="hidden"
+          animate={controls}
+          variants={textVariants}
+          className="text-center"
+          transition={{ delay: 0.8 }}
+        >
+          INTO A &nbsp;
+          {showColoredText && renderTypewriterText("TREND", "text-sept-purple")}
+        </motion.p>
+      </div>
+    </div>
+  );
+};
+
+export default WhyUs;

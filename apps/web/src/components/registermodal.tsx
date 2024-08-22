@@ -40,7 +40,7 @@ const RegisterModal = () => {
   return (
     <div>
       <button onClick={() => setIsModalOpen(true)} className="btn btn-primary">
-        Register
+        Register Here
       </button>
       {isModalOpen && (
         <div className="modal modal-open">
