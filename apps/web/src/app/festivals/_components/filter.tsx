@@ -13,7 +13,7 @@ export default function Filter() {
   const locations = [{ place: "Jakarta" }, { place: "Bandung" }, { place: "Bali" }]
 
   return (
-    <div className="bg-sept-black w-full overflow-visible h-screen pt-[100px]">
+    <div className="bg-sept-black w-full overflow-visible pt-[100px]">
       {/* <h1 className="h-[69px] z-10 text-sept-white text-2xl sm:text-6xl px-8">
         [&nbsp; Our Festivals &emsp; &emsp; ]
       </h1> */}

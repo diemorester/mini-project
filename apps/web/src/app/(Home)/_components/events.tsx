@@ -93,7 +93,7 @@ export default function Events() {
           initial={{ x: "100%", opacity: 0 }}
           animate={firstEventControls}
           transition={{ type: "spring", stiffness: 300, damping: 50 }}
-          className="flex left-0 relative justify-end w-3/4 z-50"
+          className="flex left-0 relative justify-end w-3/4 z-30"
         >
           <div className="line-nav flex w-full gap-5 h-fit items-center absolute -top-5 left-0 z-30">
             <span className="h-3 w-full bg-sept-green z-20" />
@@ -142,24 +142,18 @@ export default function Events() {
           initial={{ x: "100%", opacity: 0 }}
           animate={secondEventControls}
           transition={{ type: "spring", stiffness: 300, damping: 50 }}
-          className="flex right-0 relative justify-start w-3/4 z-50 self-end"
+          className="flex right-0 relative justify-start w-3/4 z-30 self-end"
         >
           <div className="line-nav flex w-full gap-5 h-fit items-center absolute -top-5 left-0 z-30">
             <p className="text-2xl sm:text-4xl italic font-bold text-sept-green text-nowrap z-30">
-              JAVA JAZZ.
+              SYNCHRONIZE.
             </p>
             <span className="h-3 w-full bg-sept-green z-20" />
           </div>
           <div className="container-box flex mr-10 w-[750px] bg-sept-gray h-[350px]">
             <div className="flex flex-col gap-4 w-2/3 items-center h-full relative justify-center px-6 py-6">
               <p className="text-sept-white text-justify overflow-hidden text-sm sm:text-lg">
-                The Java Jazz Festival is one of the largest and most renowned
-                jazz festivals in the world, held annually in Jakarta,
-                Indonesia. The festival showcases a diverse lineup of jazz
-                artists with contemporary styles like R&B, soul, and funk. Known
-                for its vibrant atmosphere and eclectic performances, the Java
-                Jazz Festival offers a rich cultural experience that celebrates
-                both the heritage and the evolving nature of jazz music.
+              Synchronize Festival is an annual multi-genre music festival held in Jakarta, Indonesia. The festival is known for its inclusive atmosphere, vibrant performances, and dedication to promoting local talent. In addition to music, it often includes art installations, film screenings, and other cultural activities, making it a comprehensive cultural event that highlights the richness of Indonesia's creative industry.
               </p>
               <div className="self-start">
                 <Link href="/" className="">
@@ -191,7 +185,7 @@ export default function Events() {
           initial={{ x: "100%", opacity: 0 }}
           animate={thirdEventControls}
           transition={{ type: "spring", stiffness: 300, damping: 50 }}
-          className="flex left-0 relative justify-end w-3/4 z-50"
+          className="flex left-0 relative justify-end w-3/4 z-30"
         >
           <div className="line-nav flex w-full gap-5 h-fit items-center absolute -top-5 left-0 z-30">
             <span className="h-3 w-full bg-sept-green z-20" />

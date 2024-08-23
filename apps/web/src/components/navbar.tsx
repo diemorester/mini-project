@@ -17,13 +17,13 @@ export default function Navbar() {
           onClick={() => setIsOpen(!isOpen)}
         >
           {!isOpen ? (
-            <button className="z-50">Menu</button>
+            <button className="z-50">MENU</button>
           ) : (
-            <button>Close</button>
+            <button>CLOSE</button>
           )}
         </div>
         <div className=" hover:text-sept-green">
-          <button className="z-50">Login</button>
+          <button className="z-50">LOGIN</button>
         </div>
       </div>
       <div
@@ -34,7 +34,7 @@ export default function Navbar() {
         }`}
       >
         <div
-          className={`flex flex-col w-full absolute bottom-[30%] text-6xl px-8 transition-opacity duration-700 ${
+          className={`flex flex-col w-full absolute bottom-[30%] text-3xl sm:text-6xl px-8 transition-opacity duration-700 ${
             isOpen ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -58,7 +58,7 @@ export default function Navbar() {
           </div>
           <div>
             <Link
-              href="/festival"
+              href="/festivals"
               className="text-sept-white hover:text-sept-green"
               onClick={handleClose}
             >
