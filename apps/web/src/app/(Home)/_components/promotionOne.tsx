@@ -1,35 +1,40 @@
 "use client";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function PromotionOne() {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          console.log("Intersection Observer Entry:", entry);
+          if (entry.intersectionRatio > 0.5) {
+            console.log("Element is in the middle of the viewport");
+            controls.start("visible");
+          } else {
+            console.log("Element is out of the middle of the viewport");
+            controls.start("hidden");
+          }
+        });
+      },
+      { threshold: [0.5] } 
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+      console.log("Observer is observing the element");
+    }
+
+    return () => {
       if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-        const scrollTop =
-          window.scrollY || document.documentElement.scrollTop;
-
-        if (rect.top >= 0) {
-          controls.start("hidden");
-        } else {
-          
-          controls.start("visible");
-        }
-
-        setLastScrollTop(scrollTop);
+        observer.unobserve(ref.current);
+        console.log("Observer has stopped observing the element");
       }
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [controls, lastScrollTop]);
+  }, [controls]);
 
   const leftVariants = {
     hidden: { opacity: 0, x: -100, color: "#FFFFFF" },
@@ -83,7 +88,7 @@ export default function PromotionOne() {
   return (
     <motion.div
       ref={ref}
-      className="bg-sept-purple py-[60px] md:py-[200px] text-sept-white font-semibold"
+      className="bg-sept-purple py-[60px] md:py-[200px]  text-sept-white font-semibold"
       initial="hidden"
       animate={controls}
       variants={containerVariants}
