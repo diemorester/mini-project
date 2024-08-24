@@ -39,7 +39,7 @@ const RegisterModal = () => {
 
   return (
     <div>
-      <button onClick={() => setIsModalOpen(true)} className="btn btn-primary">
+      <button onClick={() => setIsModalOpen(true)} className="hover:text-sept-green">
         Register Here
       </button>
       {isModalOpen && (
@@ -153,7 +153,6 @@ const GetStartedModal = ({
     },
     onSubmit: (values) => {
       const combinedData = { ...registerData, ...values };
-      // Submit combinedData to the backend
       console.log(combinedData);
       onClose();
     },

@@ -10,12 +10,9 @@ export default function PromotionOne() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          console.log("Intersection Observer Entry:", entry);
           if (entry.intersectionRatio > 0.5) {
-            console.log("Element is in the middle of the viewport");
             controls.start("visible");
           } else {
-            console.log("Element is out of the middle of the viewport");
             controls.start("hidden");
           }
         });
@@ -25,13 +22,11 @@ export default function PromotionOne() {
 
     if (ref.current) {
       observer.observe(ref.current);
-      console.log("Observer is observing the element");
     }
 
     return () => {
       if (ref.current) {
         observer.unobserve(ref.current);
-        console.log("Observer has stopped observing the element");
       }
     };
   }, [controls]);

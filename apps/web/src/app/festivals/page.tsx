@@ -1,4 +1,4 @@
-import FestivalItems from "./_components/festivalItem";
+import FestivalItems from "./_components/festivalitem";
 import Filter from "./_components/filter";
 import PageNumber from "./_components/pageNumber";
 
@@ -9,10 +9,10 @@ export default function Festivals() {
                 <Filter />
             </div>
             <div className="h-[200px] place-content-center z-30">
-                <div className="w-full bg-sept-black h-[60px] flex justify-center font-semibold gap-8 items-center md:text-xl">
-                    <p>Search Result</p>
+                <div className="w-full bg-sept-black h-[60px] flex justify-center font-semibold gap-8 items-center md:text-xl cursor-pointer">
+                    <p className="hover:text-sept-green ">Search Result</p>
                     <div className="w-[5px] h-10 bg-white"></div>
-                    <p>Recent Festival</p>
+                    <p className="hover:text-sept-green ">Recent Festival</p>
                 </div>
             </div>
             <div className="flex flex-col gap-16 items-center z-30">
