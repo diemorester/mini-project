@@ -4,7 +4,7 @@ import FestivalItems from "./_components/festivalitem";
 import Filter from "./_components/filter";
 import PageNumber from "./_components/pageNumber";
 
-const itemsPerPage = 6;
+const itemsPerPage = 1;
 const allFestivalItems = [
   {
     id: 1,

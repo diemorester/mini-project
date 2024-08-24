@@ -1,7 +1,26 @@
+"use client"
+
 import Image from "next/image";
+import { useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft } from "react-icons/fa";
 
 export default function DetailedEvents() {
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const optionAmount = [{label: "1 Fan", value: 1}, {label: "2 Fans", value: 2}, {label: "3 Fans", value: 3}]
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [discount, setDiscount] = useState(0)
+  const [isPointUsed, setIsPointUsed] = useState(false)
+  const [subTotal, setSubTotal] = useState(0)
+
+  const onSelectAmount = (item: any) => {
+    
+    if (item.target.value !== 0){setTotalPrice(item.target.value * 200000)}
+    else {setTotalPrice(0)}
+  }
+
+  
+
   return (
     <div className="relative overflow-hidden">
       <div className="w-screen h-[500px] bg-sept-black">
@@ -46,13 +65,69 @@ export default function DetailedEvents() {
         </p>
       </div>
       <div className="flex justify-end gap-11 items-center bg-sept-black p-5 sm:px-16">
-        <div className="flex gap-2 cursor-pointer text-sept-white hover:text-sept-purple hover:scale-110 transition-colors duration-100 ease-in-out">
+        <button onClick={() => setIsCartOpen(true)} className="flex gap-2 text-sept-white hover:text-sept-purple hover:scale-110 transition-colors duration-100 ease-in-out">
           <p className="text-5xl italic font-extrabold ">Get The Tickets</p>
-          <button>
-            <FaChevronRight className="text-3xl sm:text-6xl" />
-          </button>
-        </div>
+          <FaChevronRight className="text-3xl sm:text-6xl" />
+        </button>
       </div>
+      {isCartOpen && (
+        <dialog className="modal modal-open">
+          <div className="modal-box bg-stone-400 text-black w-10/12 max-w-3xl h-auto">
+            <div className="flex justify-between">
+              <div className="flex gap-3 ">
+                <div className="w-[20%]">
+                  <Image src="/images/foto4.jpeg" alt="javajazz" width={600} height={600} />
+                </div>
+                <div className="flex flex-col">
+                  <p className="font-extrabold sm:text-3xl italic">JAVA JAZZ.</p>
+                  <select onClick={(e) => onSelectAmount(e)} className="select w-full max-w-xs bg-stone-400">
+                    <option value={0}>Ticket Amount</option>
+                    {optionAmount.map((items, index) => <option key={index} value={items.value} >{items.label}</option>)}
+                  </select>
+                </div>
+              </div>
+              <p className="sm:text-2xl">Rp{totalPrice?.toLocaleString('de-DE')}</p>
+            </div>
+            <div>
+              <div className="flex flex-row gap-3 py-3">
+                <p>5000 points</p>
+                <button className="text-sept-green">Use</button>
+              </div>
+              <div>
+                <div className="flex gap-3 sm:gap-8 justify-center">
+                  <input type="text" placeholder="Discount Code" className="input rounded-none w-4/6 bg-sept-white" />
+                  <button className="p-3 sm:w-1/6 bg-sept-green text-sept-white">APPLY</button>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col pt-16 gap-3">
+              <div className="flex justify-between sm:px-20">
+                <p>Points Used</p>
+                <p>5000</p>
+              </div>
+              <div className="flex justify-between sm:px-20">
+                <p>Discount</p>
+                <p>-Rp30.000</p>
+              </div>
+              <div className="flex justify-between sm:px-20">
+                <p>Sub Total</p>
+                <p>Rp165.000</p>
+              </div>
+            </div>
+            <div className="pt-10 flex justify-center">
+              <button className="w-8/12 bg-sept-green">
+                <p className="p-4 sm:text-xl font-extrabold text-sept-white">Pay Now</p>
+              </button>
+            </div>
+            <form method="dialog">
+              <button className="flex items-center" onClick={() => setIsCartOpen(false)}>
+                <FaChevronLeft />
+                <p className="italic">Return</p>
+              </button>
+            </form>
+          </div>
+        </dialog>
+      )}
     </div>
   );
 }
