@@ -20,10 +20,10 @@ export default function DetailedEvents() {
             <div className="bg-sept-black sm:text-justify px-20 py-40">
                 <p className="sm:text-2xl font-thin">The Java Jazz Festival is one of the largest and most renowned jazz festivals in the world, held annually in Jakarta, Indonesia. Established in 2005, the festival attracts both international and local jazz enthusiasts, offering a diverse lineup that spans various genres, including traditional jazz, contemporary jazz, fusion, blues, R&B, soul, and more. It typically takes place over three days in early March, featuring multiple stages with performances by a mix of legendary jazz artists, up-and-coming musicians, and world-renowned headliners. The festival is known for its vibrant atmosphere, with thousands of attendees enjoying not only the music but also the cultural diversity of the festival, the food stalls, and the unique merchandise. The Java Jazz Festival has become a significant cultural event, showcasing rich musical heritage of Indonesia and its connection to the global jazz community.</p>
             </div>
-            <div className="flex justify-end gap-11 items-center bg-sept-black px-16">
+            <div className="flex justify-end gap-11 items-center bg-sept-black p-5 sm:px-16">
                 <p className="text-sept-white text-5xl italic font-extrabold">Get The Tickets</p>
                 <button>
-                    <FaChevronRight className="text-sept-white text-6xl hover:text-sept-purple hover:scale-110 transition-colors duration-100 ease-in-out" />
+                    <FaChevronRight className="text-sept-white text-3xl sm:text-6xl hover:text-sept-purple hover:scale-110 transition-colors duration-100 ease-in-out" />
                 </button>
             </div>
         </div>

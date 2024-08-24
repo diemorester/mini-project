@@ -170,7 +170,7 @@ export default function Events() {
             </div>
             <div className="w-1/3">
               <Image
-                src="/images/foto4.jpeg"
+                src="/images/foto3.jpg"
                 alt="foto1"
                 width={500}
                 height={750}
@@ -190,13 +190,13 @@ export default function Events() {
           <div className="line-nav flex w-full gap-5 h-fit items-center absolute -top-5 left-0 z-30">
             <span className="h-3 w-full bg-sept-green z-20" />
             <p className="text-2xl sm:text-4xl italic font-bold text-sept-green text-nowrap z-30">
-              JAVA JAZZ.
+              HAMMERSONIC.
             </p>
           </div>
           <div className="container-box flex ml-10 w-[750px] bg-sept-gray h-[350px]">
             <div className="w-1/3">
               <Image
-                src="/images/foto4.jpeg"
+                src="/images/foto2.jpg"
                 alt="foto1"
                 width={500}
                 height={750}
@@ -205,13 +205,7 @@ export default function Events() {
             </div>
             <div className="flex flex-col gap-4 w-2/3 items-center h-full relative justify-center px-6 py-6">
               <p className="text-sept-white text-justify overflow-hidden text-sm sm:text-lg">
-                The Java Jazz Festival is one of the largest and most renowned
-                jazz festivals in the world, held annually in Jakarta,
-                Indonesia. The festival showcases a diverse lineup of jazz
-                artists with contemporary styles like R&B, soul, and funk. Known
-                for its vibrant atmosphere and eclectic performances, the Java
-                Jazz Festival offers a rich cultural experience that celebrates
-                both the heritage and the evolving nature of jazz music.
+              Hammersonic is one of the largest metal music festivals in Southeast Asia, held annually in Jakarta, Indonesia. The festival features a diverse lineup of international and local bands spanning various metal and rock genres, including heavy metal, death metal, metalcore, and more. Known for its intense atmosphere and high-energy performances, Hammersonic attracts metal fans from all over the region. It also serves as a platform for emerging bands to showcase their talents alongside renowned international acts. The festival has gained a reputation for its well-organized events, vibrant crowd, and dedication to the metal music community.
               </p>
               <div className="self-end">
                 <Link href="/" className="">
