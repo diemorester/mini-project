@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import LoginModal from "./userLog/loginmodal";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +22,11 @@ export default function Navbar() {
             <button>CLOSE</button>
           )}
         </div>
-        <LoginModal />
+        <div>
+          <Link href="/login" className="hover:text-sept-green">
+            LOGIN
+          </Link>
+        </div>
       </div>
       <div
         className={`fixed transition-all ease-in-out duration-700 z-40 ${
