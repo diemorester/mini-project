@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { set } from "cypress/types/lodash";
 
 const WhyUs = () => {
   const controls = useAnimation();
