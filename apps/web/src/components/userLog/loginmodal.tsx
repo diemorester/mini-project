@@ -27,10 +27,10 @@ export default function LoginModal() {
   return (
     <div>
       <button
-        className="btn btn-primary bg-blue-50"
+        className="hover:text-sept-green"
         onClick={() => setIsModalOpen(true)}
       >
-        Login
+        LOGIN
       </button>
 
       {isModalOpen && (
@@ -102,9 +102,10 @@ export default function LoginModal() {
               <div>Forget Password?</div>
               <div className="divider" />
             </div>
-          <div className="text-center"> Not registered?
-            <RegisterModal />
-
+            <div className="text-center">
+              {" "}
+              Not registered?
+              <RegisterModal />
             </div>
           </div>
         </div>

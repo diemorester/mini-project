@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@types/typescript": "^2.0.0",
+    "@types/yup": "^0.32.0",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
     "formik": "^2.4.6",

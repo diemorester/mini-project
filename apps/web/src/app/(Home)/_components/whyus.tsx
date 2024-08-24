@@ -26,18 +26,16 @@ const WhyUs = () => {
           }
         });
       },
-      { threshold: 0.5 } // Adjust the threshold as needed
+      { threshold: 0.5 } 
     );
 
     if (ref.current) {
       observer.observe(ref.current);
-      console.log("Observer is observing the element");
     }
 
     return () => {
       if (ref.current) {
         observer.unobserve(ref.current);
-        console.log("Observer has stopped observing the element");
       }
     };
   }, [controls]);
