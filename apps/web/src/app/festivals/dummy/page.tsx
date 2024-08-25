@@ -7,12 +7,12 @@ import { FaChevronLeft } from "react-icons/fa";
 
 export default function DetailedEvents() {
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const optionAmount = [{label: "1 Fan", value: 1}, {label: "2 Fans", value: 2}, {label: "3 Fans", value: 3}]
   const [totalPrice, setTotalPrice] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [isPointUsed, setIsPointUsed] = useState(false)
   const [subTotal, setSubTotal] = useState(0)
-
+  
+  const optionAmount = [{label: "1 Fan", value: 1}, {label: "2 Fans", value: 2}, {label: "3 Fans", value: 3}]
   const onSelectAmount = (item: any) => {
     
     if (item.target.value !== 0){setTotalPrice(item.target.value * 200000)}
@@ -41,7 +41,7 @@ export default function DetailedEvents() {
             <p className="sm:text-2xl font-bold text-sept-white">May 30th</p>
           </div>
           <div className="w-[6px] h-16 bg-white "></div>
-          <p className="sm:text-6xl text-sept-purple font-extrabold">
+          <p className="text-xs sm:text-6xl text-sept-purple font-extrabold">
             JAVA JAZZ.
           </p>
         </div>
@@ -75,18 +75,20 @@ export default function DetailedEvents() {
           <div className="modal-box bg-stone-400 text-black w-10/12 max-w-3xl h-auto">
             <div className="flex justify-between">
               <div className="flex gap-3 ">
-                <div className="w-[20%]">
+                <div className="max-sm:hidden sm:w-[30%]">
                   <Image src="/images/foto4.jpeg" alt="javajazz" width={600} height={600} />
                 </div>
                 <div className="flex flex-col">
                   <p className="font-extrabold sm:text-3xl italic">JAVA JAZZ.</p>
-                  <select onClick={(e) => onSelectAmount(e)} className="select w-full max-w-xs bg-stone-400">
+                  <select onClick={(e) => onSelectAmount(e)} className="select w-full max-w-xs border-stone-400 bg-stone-400">
                     <option value={0}>Ticket Amount</option>
                     {optionAmount.map((items, index) => <option key={index} value={items.value} >{items.label}</option>)}
                   </select>
                 </div>
               </div>
-              <p className="sm:text-2xl">Rp{totalPrice?.toLocaleString('de-DE')}</p>
+              <div className="sm:w-[20%]">
+                <p className="sm:text-xl text-end">Rp{totalPrice?.toLocaleString('de-DE')}</p>
+              </div>
             </div>
             <div>
               <div className="flex flex-row gap-3 py-3">
@@ -102,15 +104,15 @@ export default function DetailedEvents() {
             </div>
             <div className="flex flex-col pt-16 gap-3">
               <div className="flex justify-between sm:px-20">
-                <p>Points Used</p>
+                <p>Points Used :</p>
                 <p>5000</p>
               </div>
               <div className="flex justify-between sm:px-20">
-                <p>Discount</p>
+                <p>Discount :</p>
                 <p>-Rp30.000</p>
               </div>
               <div className="flex justify-between sm:px-20">
-                <p>Sub Total</p>
+                <p>Sub Total :</p>
                 <p>Rp165.000</p>
               </div>
             </div>
