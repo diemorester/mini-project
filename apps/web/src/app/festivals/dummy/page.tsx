@@ -4,22 +4,24 @@ import Image from "next/image";
 import { useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
+import VoucherCodeForm from "./_components/promotionCode";
 
 export default function DetailedEvents() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
-  const [discount, setDiscount] = useState(0)
   const [isPointUsed, setIsPointUsed] = useState(false)
+  const [pointUse, setPointUse] = useState(0)
+  const [discount, setDiscount] = useState(0)
   const [subTotal, setSubTotal] = useState(0)
   
+  const point = 5000
+  const handlePoint = () => setPointUse(point)
   const optionAmount = [{label: "1 Fan", value: 1}, {label: "2 Fans", value: 2}, {label: "3 Fans", value: 3}]
   const onSelectAmount = (item: any) => {
     
     if (item.target.value !== 0){setTotalPrice(item.target.value * 200000)}
     else {setTotalPrice(0)}
   }
-
-  
 
   return (
     <div className="relative overflow-hidden">
@@ -82,7 +84,7 @@ export default function DetailedEvents() {
                   <p className="font-extrabold sm:text-3xl italic">JAVA JAZZ.</p>
                   <select onClick={(e) => onSelectAmount(e)} className="select w-full max-w-xs border-stone-400 bg-stone-400">
                     <option value={0}>Ticket Amount</option>
-                    {optionAmount.map((items, index) => <option key={index} value={items.value} >{items.label}</option>)}
+                    {optionAmount.map((items, index) => <option className="text-start" key={index} value={items.value} >{items.label}</option>)}
                   </select>
                 </div>
               </div>
@@ -92,20 +94,27 @@ export default function DetailedEvents() {
             </div>
             <div>
               <div className="flex flex-row gap-3 py-3">
-                <p>5000 points</p>
-                <button className="text-sept-green">Use</button>
+                <p>{`${point} Points`}</p>
+                <div onClick={() => setIsPointUsed(!isPointUsed)}>
+                  {!isPointUsed ? (
+                    <button onClick={handlePoint} className="text-sept-green italic">Use</button>
+                  ) : (
+                    <button onClick={() => setPointUse(0)} className="text-sept-purple italic">Used</button>
+                  )}
+                </div>
               </div>
               <div>
-                <div className="flex gap-3 sm:gap-8 justify-center">
-                  <input type="text" placeholder="Discount Code" className="input rounded-none w-4/6 bg-sept-white" />
-                  <button className="p-3 sm:w-1/6 bg-sept-green text-sept-white">APPLY</button>
+                <div className="w-full">
+                  {/* <input type="text" placeholder="Discount Code" className="input rounded-none w-4/6 bg-sept-white" />
+                  <button className="p-3 sm:w-1/6 bg-sept-green text-sept-white">APPLY</button> */}
+                  <VoucherCodeForm />
                 </div>
               </div>
             </div>
             <div className="flex flex-col pt-16 gap-3">
               <div className="flex justify-between sm:px-20">
                 <p>Points Used :</p>
-                <p>5000</p>
+                <p>{pointUse}</p>
               </div>
               <div className="flex justify-between sm:px-20">
                 <p>Discount :</p>
