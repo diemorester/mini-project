@@ -1,7 +1,11 @@
 import Image from "next/image";
 import { FaChevronRight } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 export default function DetailedEvents() {
+  const router = useRouter();
+  const { id } = router.query;
+
   return (
     <div className="relative overflow-hidden">
       <div className="w-screen h-[500px] bg-sept-black">
