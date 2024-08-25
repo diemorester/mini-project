@@ -3,10 +3,13 @@
 import Image from "next/image";
 import { useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
-import { FaChevronLeft } from "react-icons/fa";
 import VoucherCodeForm from "./_components/promotionCode";
+import { FaChevronLeft } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 export default function DetailedEvents() {
+  const router = useRouter();
+  const { id } = router.query;
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
   const [isPointUsed, setIsPointUsed] = useState(false)

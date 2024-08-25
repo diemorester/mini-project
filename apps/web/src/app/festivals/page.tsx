@@ -1,82 +1,34 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import FestivalItems from "./_components/festivalitem";
 import Filter from "./_components/filter";
 import PageNumber from "./_components/pageNumber";
+import festivalData from "./festivaldata.json";
 
-const itemsPerPage = 1;
-const allFestivalItems = [
-  {
-    id: 1,
-    name: "Festival 1",
-    year: 2025,
-    productionCompany: "PT. Java Festival Production",
-  },
-  {
-    id: 2,
-    name: "Festival 2",
-    year: 2024,
-    productionCompany: "PT. Malaya Festival Production",
-  },
-  {
-    id: 3,
-    name: "Festival 3",
-    year: 2023,
-    productionCompany: "PT. Sumatra Festival Production",
-  },
-  {
-    id: 4,
-    name: "Festival 4",
-    year: 2022,
-    productionCompany: "PT. Bali Festival Production",
-  },
-  {
-    id: 5,
-    name: "Festival 5",
-    year: 2021,
-    productionCompany: "PT. Kalimantan Festival Production",
-  },
-  {
-    id: 6,
-    name: "Festival 6",
-    year: 2020,
-    productionCompany: "PT. Sulawesi Festival Production",
-  },
-  {
-    id: 7,
-    name: "Festival 7",
-    year: 2019,
-    productionCompany: "PT. Papua Festival Production",
-  },
-  {
-    id: 8,
-    name: "Festival 8",
-    year: 2018,
-    productionCompany: "PT. Nusa Tenggara Festival Production",
-  },
-  {
-    id: 9,
-    name: "Festival 9",
-    year: 2017,
-    productionCompany: "PT. Maluku Festival Production",
-  },
-  {
-    id: 10,
-    name: "Festival 10",
-    year: 2016,
-    productionCompany: "PT. Borneo Festival Production",
-  },
-];
+const itemsPerPage = 6;
+
+interface Festival {
+  id: number;
+  name: string;
+  date: string;
+  Company: string;
+}
 
 export default function Festivals() {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalItems = allFestivalItems.length;
+  const totalItems = (festivalData as Festival[]).length;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = allFestivalItems.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentItems = (festivalData as Festival[])
+    .slice(indexOfFirstItem, indexOfLastItem)
+    .map(({ id, name, Company, date }) => ({
+      id,
+      name,
+      Company,
+      year: new Date(date).getFullYear(),
+    }));
+
   return (
     <div className="bg-sept-black text-sept-white relative overflow-hidden">
       <div className="z-30">
@@ -93,14 +45,14 @@ export default function Festivals() {
         {currentItems.map((item) => (
           <FestivalItems
             key={item.id}
+            id={item.id}
             imageSrc="/images/festival6.jpg"
             festivalName={item.name}
             year={item.year}
-            productionCompany={item.productionCompany}
+            productionCompany={item.Company}
           />
         ))}
       </div>
-
       <div className="z-0">
         <svg
           className="absolute fill-sept-purple max-sm:hidden animate-spin-slow bottom-[23%] -right-[10%]"
