@@ -1,28 +1,32 @@
-import { Request, Response } from "express";
-import prisma from "@/prisma";
-import fs from "fs";
-import path from "path";
+import { Request, Response } from 'express';
+import prisma from '@/prisma';
+import fs from 'fs';
+import path from 'path';
 
 export class EventController {
-  async createEvent(req: Request, res: Response) {
+  createEvent = async (req: Request, res: Response) => {
     try {
       const {
         title,
         description,
-        startDate,
-        endDate,
+        startDateTime,
+        endDateTime,
         location,
-        categoryId,
+        category,
         price,
         isFree,
         ticket,
       } = req.body;
+
+      console.log(req.body);
       const userId = req.user?.id;
       const parsedPrice = parseFloat(price);
-      const startDateTime = new Date(startDate);
-      const endDateTime = new Date(endDate);
-      const parsedCategoryId = parseInt(categoryId, 10);
-      const isEventFree = isFree === "true" || parsedPrice <= 0;
+
+      const startDate = new Date(`${startDateTime}T00:00:00Z`);
+      const endDate = new Date(`${endDateTime}T00:00:00Z`);
+      console.log(startDateTime, endDateTime);
+
+      const isEventFree = isFree === 'true' || parsedPrice <= 0;
 
       let imageUrl: string | null = null;
       if (req.file) {
@@ -32,13 +36,28 @@ export class EventController {
         fs.renameSync(tempPath, imageUrl);
       }
 
+      let parsedCategoryId: number | null = null;
+      const existingCategory = await prisma.category.findUnique({
+        where: { name: category },
+      });
+
+      if (!existingCategory) {
+        const createdCategory = await prisma.category.create({
+          data: { name: category },
+        });
+        parsedCategoryId = createdCategory.id;
+      } else {
+        parsedCategoryId = existingCategory.id;
+      }
+
       if (userId) {
+        console.log('oke');
         const createdEvent = await prisma.event.create({
           data: {
             title,
             description,
-            startDateTime,
-            endDateTime,
+            startDateTime: startDate,
+            endDateTime: endDate,
             location,
             categoryId: parsedCategoryId,
             organizerId: userId,
@@ -50,11 +69,12 @@ export class EventController {
         return res.status(201).json(createdEvent);
       }
 
-      throw new Error("User not authenticated");
+      throw new Error('User not authenticated');
     } catch (err) {
-      res.status(400).json({ status: "error", message: err });
+      console.log(err);
+      res.status(400).json({ status: 'error', message: err });
     }
-  }
+  };
 
   async updateEvent(req: Request, res: Response) {
     try {
@@ -76,7 +96,7 @@ export class EventController {
       const startDateTime = new Date(startDate);
       const endDateTime = new Date(endDate);
       const parsedCategoryId = parseInt(categoryId, 10);
-      const isEventFree = isFree === "true" || parsedPrice <= 0;
+      const isEventFree = isFree === 'true' || parsedPrice <= 0;
 
       let imageUrl: string | null = null;
       if (req.file) {
@@ -89,7 +109,7 @@ export class EventController {
       const existingEvent = await prisma.event.findUnique({
         where: { id: eventId },
       });
-      if (!existingEvent) throw new Error("Event not found");
+      if (!existingEvent) throw new Error('Event not found');
 
       if (userId && existingEvent.organizerId === userId) {
         const updatedEvent = await prisma.event.update({
@@ -109,9 +129,9 @@ export class EventController {
         return res.status(200).json(updatedEvent);
       }
 
-      throw new Error("Unauthorized to update this event");
+      throw new Error('Unauthorized to update this event');
     } catch (err) {
-      res.status(400).json({ status: "error", message: err });
+      res.status(400).json({ status: 'error', message: err });
     }
   }
 
@@ -123,7 +143,7 @@ export class EventController {
       const existingEvent = await prisma.event.findUnique({
         where: { id: eventId },
       });
-      if (!existingEvent) throw new Error("Event not found");
+      if (!existingEvent) throw new Error('Event not found');
 
       if (userId && existingEvent.organizerId === userId) {
         const deletedEvent = await prisma.event.delete({
@@ -132,26 +152,26 @@ export class EventController {
         return res.status(200).json(deletedEvent);
       }
 
-      throw new Error("Unauthorized to delete this event");
+      throw new Error('Unauthorized to delete this event');
     } catch (err) {
-      res.status(400).json({ status: "error", message: err });
+      res.status(400).json({ status: 'error', message: err });
     }
   }
 
   async getAllEvents(req: Request, res: Response) {
     try {
       const {
-        q: query = "",
-        category = "",
-        page = "1",
-        limit = "3",
+        q: query = '',
+        category = '',
+        page = '1',
+        limit = '3',
       } = req.query;
 
       const pageNumber = parseInt(page as string, 10) || 1;
       const limitNumber = parseInt(limit as string, 10) || 3;
 
       const events = await prisma.event.findMany({
-        orderBy: { id: "desc" },
+        orderBy: { id: 'desc' },
         where: {
           AND: [
             { category: { name: { contains: category as string } } },
@@ -189,7 +209,7 @@ export class EventController {
 
       res.status(200).json({ events, totalPages, currentPage: pageNumber });
     } catch (err) {
-      res.status(400).json({ status: "error", message: err });
+      res.status(400).json({ status: 'error', message: err });
     }
   }
 
@@ -205,18 +225,18 @@ export class EventController {
         },
       });
 
-      if (!event) throw new Error("Event not found");
+      if (!event) throw new Error('Event not found');
 
       res.status(200).json(event);
     } catch (err) {
-      res.status(400).json({ status: "error", message: err });
+      res.status(400).json({ status: 'error', message: err });
     }
   }
 
   async getEventsByOrganizer(req: Request, res: Response) {
     try {
       const userId = req.user?.id;
-      const { page = "1", limit = "3" } = req.query;
+      const { page = '1', limit = '3' } = req.query;
 
       const pageNumber = parseInt(page as string, 10) || 1;
       const limitNumber = parseInt(limit as string, 10) || 3;
@@ -238,7 +258,7 @@ export class EventController {
 
       res.status(200).json({ events, totalPages, currentPage: pageNumber });
     } catch (err) {
-      res.status(400).json({ status: "error", message: err });
+      res.status(400).json({ status: 'error', message: err });
     }
   }
 }

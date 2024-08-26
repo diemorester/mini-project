@@ -42,6 +42,13 @@ export class UserRouter {
       this.userMiddleware.verifyToken,
       this.userController.userActivate
     );
+
+    this.router.post(
+      '/submit-referral',
+      this.userMiddleware.verifyToken,
+      this.userController.submitReferral
+    );
+
     this.router.get(
       "/updateEmail",
       this.userMiddleware.verifyToken,
