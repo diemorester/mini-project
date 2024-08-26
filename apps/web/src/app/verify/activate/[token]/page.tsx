@@ -1,12 +1,12 @@
-"use client";
-import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+'use client';
+import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 
 export default function Page() {
-  const [referralCode, setReferralCode] = useState("");
+  const [referralCode, setReferralCode] = useState('');
   const [showReferralForm, setShowReferralForm] = useState(false);
-  const [message, setMessage] = useState("");
-  const [generatedReferralCode, setGeneratedReferralCode] = useState("");
+  const [message, setMessage] = useState('');
+  const [generatedReferralCode, setGeneratedReferralCode] = useState('');
   const params = useParams();
   const router = useRouter();
 
@@ -15,67 +15,73 @@ export default function Page() {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_API_URL}/users/activate`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${params.token}`,
           },
-          body: JSON.stringify({ referral: referralCode }),
-        }
+        },
       );
 
       const data = await res.json();
 
       if (res.ok) {
-        if (data.referralCode) {
-          setGeneratedReferralCode(data.referralCode);
-          setShowReferralForm(true);
-        } else {
-          router.push("/login");
-        }
+        setGeneratedReferralCode(data.data.referralCode);
+        setShowReferralForm(true);
       } else {
-        setMessage(typeof data.message === 'string' ? data.message : "Activation failed");
+        setMessage(
+          typeof data.message === 'string' ? data.message : 'Activation failed',
+        );
       }
     } catch (err) {
       console.log(err);
-      setMessage("An error occurred");
+      setMessage('An error occurred');
     }
   };
 
   const handleReferralSubmit = async () => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/users/activate`,
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/users/submit-referral`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${params.token}`,
           },
-          body: JSON.stringify({ referral: referralCode }),
-        }
+          body: JSON.stringify({ referralCode: referralCode }),
+        },
       );
 
       const data = await res.json();
 
       if (res.ok) {
-        router.push("/login");
+        router.push('/login');
       } else {
-        setMessage(typeof data.message === 'string' ? data.message : "Referral submission failed");
+        setMessage(
+          typeof data.message === 'string'
+            ? data.message
+            : 'Referral submission failed',
+        );
       }
     } catch (err) {
       console.log(err);
-      setMessage("An error occurred");
+      setMessage('An error occurred');
     }
   };
 
   return (
     <div className="flex min-h-[60vh] flex-col w-[480px] items-center mx-auto justify-center gap-8">
-      <h1 className="text-2xl font-bold">Click Here to activate your account</h1>
+      <h1 className="text-2xl font-bold">
+        Click Here to activate your account
+      </h1>
       {showReferralForm ? (
         <div className="flex flex-col items-center gap-4">
           {generatedReferralCode && (
-            <p>Your referral code: <span className="font-bold">{generatedReferralCode}</span></p>
+            <p>
+              Your referral code:{' '}
+              <span className="font-bold">{generatedReferralCode}</span>
+            </p>
           )}
           <input
             type="text"
@@ -99,9 +105,7 @@ export default function Page() {
           Activate Account
         </button>
       )}
-      {message && (
-        <p className="text-red-500">{message}</p>
-      )}
+      {message && <p className="text-red-500">{message}</p>}
     </div>
   );
-}  
+}

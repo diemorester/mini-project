@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
-import prisma from "@/prisma";
-import { hash, genSalt, compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
-import fs from "fs";
-import handlebars from "handlebars";
-import path from "path";
-import { transporter } from "@/helpers/nodemailer";
+import { Request, Response } from 'express';
+import prisma from '@/prisma';
+import { hash, genSalt, compare } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
+import fs from 'fs';
+import handlebars from 'handlebars';
+import path from 'path';
+import { transporter } from '@/helpers/nodemailer';
 
 // Helper function to generate a referral number
 const generateReferralNumber = async (): Promise<string> => {
@@ -20,22 +20,22 @@ export class UserController {
       // Check required fields
       if (!role || !userName || !email || !password) {
         return res.status(400).json({
-          status: "error",
+          status: 'error',
           message:
-            "Missing required fields: role, userName, email, and password are mandatory.",
+            'Missing required fields: role, userName, email, and password are mandatory.',
         });
       }
 
       // Check role-specific fields
-      if (role === "user" && !fullName) {
+      if (role === 'user' && !fullName) {
         return res.status(400).json({
-          status: "error",
-          message: "Full name is required for users.",
+          status: 'error',
+          message: 'Full name is required for users.',
         });
-      } else if (role === "organizer" && !company) {
+      } else if (role === 'organizer' && !company) {
         return res.status(400).json({
-          status: "error",
-          message: "Company name is required for organizers.",
+          status: 'error',
+          message: 'Company name is required for organizers.',
         });
       }
 
@@ -43,8 +43,8 @@ export class UserController {
       const existingEmail = await prisma.user.findUnique({ where: { email } });
       if (existingEmail) {
         return res.status(400).json({
-          status: "error",
-          message: "This email is already in use.",
+          status: 'error',
+          message: 'This email is already in use.',
         });
       }
 
@@ -53,8 +53,8 @@ export class UserController {
       });
       if (existingUsername) {
         return res.status(400).json({
-          status: "error",
-          message: "This username is already in use.",
+          status: 'error',
+          message: 'This username is already in use.',
         });
       }
 
@@ -67,25 +67,25 @@ export class UserController {
         data: {
           email,
           password: hashedPassword,
-          fullName: role === "user" ? fullName! : undefined,
-          company: role === "organizer" ? company! : undefined,
-          isOrganizer: role === "organizer",
+          fullName: role === 'user' ? fullName! : undefined,
+          company: role === 'organizer' ? company! : undefined,
+          isOrganizer: role === 'organizer',
           username: userName,
         },
       });
 
       // Generate JWT token
       const payload = { id: createdUser.id };
-      const token = sign(payload, process.env.KEY_JWT!, { expiresIn: "1h" });
+      const token = sign(payload, process.env.KEY_JWT!, { expiresIn: '1h' });
       const link = `http://localhost:3000/verify/activate/${token}`;
 
       // Send verification email
       const templatePath = path.join(
         __dirname,
-        "../templates",
-        "register.html"
+        '../templates',
+        'register.html',
       );
-      const templateSource = fs.readFileSync(templatePath, "utf-8");
+      const templateSource = fs.readFileSync(templatePath, 'utf-8');
       const compiledTemplate = handlebars.compile(templateSource);
       const html = compiledTemplate({
         name: createdUser.fullName || createdUser.company,
@@ -96,162 +96,186 @@ export class UserController {
         from: process.env.MAIL_USER!,
         to: createdUser.email,
         subject:
-          role === "organizer" ? "Verify as Organizer" : "Verify as User",
+          role === 'organizer' ? 'Verify as Organizer' : 'Verify as User',
         html,
       });
 
       res.status(201).json({ user: createdUser, link });
     } catch (err) {
-      console.error("Error in userRegister:", err);
+      console.error('Error in userRegister:', err);
       res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
   async userActivate(req: Request, res: Response) {
     try {
       const userId = req.user?.id;
       if (!userId) {
-        console.log("User ID is missing");
+        console.log('User ID is missing');
         return res
           .status(400)
-          .json({ status: "error", message: "User ID is missing" });
+          .json({ status: 'error', message: 'User ID is missing' });
       }
-  
-      console.log("Activating user with ID:", userId);
-  
-      // Activate the user
-      const activateUser = await prisma.user.update({
+
+      console.log('Activating user with ID:', userId);
+
+      const checkActiveUser = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (checkActiveUser?.isActive) {
+        console.log('User is already active');
+        return res
+          .status(400)
+          .json({ status: 'error', message: 'User is already active' });
+      }
+
+      await prisma.user.update({
         where: { id: userId },
         data: { isActive: true },
       });
-  
-      console.log("User activated:", activateUser);
-  
-      // Check if the user is an organizer
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-        select: { isOrganizer: true },
+
+      let referralCode = '';
+      const referral = await prisma.referral.findFirst({
+        where: { userId },
       });
-  
-      if (user?.isOrganizer) {
-        console.log("User is an organizer");
-        return res
-          .status(200)
-          .json({ status: "ok", message: "Organizer activated successfully" });
+
+      if (!referral) {
+        const referralCodeGen = await generateReferralNumber();
+        await prisma.referral.create({
+          data: { referralCode: referralCodeGen, userId },
+        });
+
+        referralCode = referralCode;
       } else {
-        console.log("User is not an organizer, handling referral logic");
-  
-        // Handle referral logic
-        let referralCode = "";
-        const existingReferral = await prisma.referral.findUnique({
-          where: { userId },
-        });
-  
-        if (!existingReferral) {
-          referralCode = await generateReferralNumber();
-          await prisma.referral.create({
-            data: { referralCode, userId },
-          });
-          console.log("Referral code generated and saved:", referralCode);
-        } else {
-          referralCode = existingReferral.referralCode;
-          console.log(
-            "Referral code already exists for user:",
-            referralCode
-          );
-        }
-  
-        if (req.user?.referral) {
-          console.log("User has a referral code:", req.user.referral);
-          const referrer = await prisma.referral.findUnique({
-            where: { referralCode: req.user.referral },
-          });
-  
-          if (!referrer) {
-            console.log("Invalid referral code");
-            return res
-              .status(400)
-              .json({ status: "error", message: "Invalid referral code" });
-          }
-  
-          console.log("Valid referral code, awarding points and discount");
-          await Promise.all([
-            prisma.points.create({
-              data: {
-                amount: 10000, // Points awarded to referrer
-                expirationDate: new Date(
-                  Date.now() + 3 * 30 * 24 * 60 * 60 * 1000 // 3 months expiration
-                ),
-                userId: referrer.userId,
-              },
-            }),
-            prisma.discount.create({
-              data: {
-                discount: 10, // Discount for the new user
-                expirationDate: new Date(
-                  Date.now() + 3 * 30 * 24 * 60 * 60 * 1000 // 3 months expiration
-                ),
-                userId: userId,
-              },
-            }),
-          ]);
-        }
-  
-        console.log("User activated successfully with referral logic");
-        return res.status(200).json({
-          status: "ok",
-          message: "User activated successfully",
-          referralCode,
-        });
+        referralCode = referral.referralCode;
       }
+
+      return res.status(200).json({
+        status: 'ok',
+        message: 'User activated successfully',
+        data: { referralCode }
+      });
     } catch (err) {
-      console.error("Error in userActivate:", err);
+      console.error('Error in userActivate:', err);
       return res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
-  
+
+  async submitReferral(req: Request, res: Response) {
+    try {
+      const { referralCode } = req.body;
+      const userId = req.user?.id;
+
+      if (!userId) {
+        console.log('User ID is missing');
+        return res
+          .status(400)
+          .json({ status: 'error', message: 'User ID is missing' });
+      }
+
+      if (!referralCode) {
+        console.log('Referral code is missing');
+        return res
+          .status(400)
+          .json({ status: 'error', message: 'Referral code is missing' });
+      }
+
+      const existingReferral = await prisma.referral.findUnique({
+        where: { referralCode },
+      });
+
+      if (!existingReferral) {
+        console.log('Invalid referral code');
+        return res
+          .status(400)
+          .json({ status: 'error', message: 'Invalid referral code' });
+      }
+
+      if (existingReferral.userId === userId) {
+        console.log('User cannot refer themselves');
+        return res
+          .status(400)
+          .json({ status: 'error', message: 'User cannot refer themselves' });
+      }
+
+      console.log('Valid referral code, awarding points and discount');
+      await Promise.all([
+        prisma.points.create({
+          data: {
+            amount: 10000, // Points awarded to referrer
+            expirationDate: new Date(
+              Date.now() + 3 * 30 * 24 * 60 * 60 * 1000, // 3 months expiration
+            ),
+            userId: existingReferral.userId,
+          },
+        }),
+        prisma.discount.create({
+          data: {
+            discount: 10, // Discount for the new user
+            expirationDate: new Date(
+              Date.now() + 3 * 30 * 24 * 60 * 60 * 1000, // 3 months expiration
+            ),
+            userId,
+          },
+        }),
+      ]);
+
+      console.log('Referral points and discount awarded successfully');
+      return res.status(200).json({
+        status: 'ok',
+        message: 'Referral points and discount awarded',
+      });
+    } catch (err) {
+      console.error('Error in submitReferral:', err);
+      return res
+        .status(500)
+        .json({ status: 'error', message: 'Internal server error.' });
+    }
+  }
 
   async userLogin(req: Request, res: Response) {
     try {
-      const { data, password } = req.body;
-      if (!data || !password) {
+      const { username, password } = req.body;
+      console.log('User login:', username);
+      if (!username || !password) {
         return res.status(400).json({
-          status: "error",
-          message: "Email/Username and password are required.",
+          status: 'error',
+          message: 'Email/Username and password are required.',
         });
       }
 
       const user = await prisma.user.findFirst({
-        where: { OR: [{ username: data }, { email: data }] },
+        where: { OR: [{ username: username }, { email: username }] },
       });
 
       if (!user)
         return res
           .status(400)
-          .json({ status: "error", message: "User not found!" });
+          .json({ status: 'error', message: 'User not found!' });
       if (!user.isActive)
         return res
           .status(400)
-          .json({ status: "error", message: "User not active" });
+          .json({ status: 'error', message: 'User not active' });
 
       const isValidPass = await compare(password, user.password);
       if (!isValidPass)
         return res
           .status(400)
-          .json({ status: "error", message: "Wrong password!" });
+          .json({ status: 'error', message: 'Wrong password!' });
 
       const payload = { id: user.id, isOrganizer: user.isOrganizer };
-      const token = sign(payload, process.env.KEY_JWT!, { expiresIn: "1h" });
+      const token = sign(payload, process.env.KEY_JWT!, { expiresIn: '1h' });
 
-      res.status(200).json({ status: "ok", user, token });
+      res.status(200).json({ status: 'ok', user, token });
     } catch (err) {
-      console.error("Error in userLogin:", err);
+      console.error('Error in userLogin:', err);
       res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
 
@@ -265,14 +289,14 @@ export class UserController {
       if (!user)
         return res
           .status(400)
-          .json({ status: "error", message: "User not found." });
+          .json({ status: 'error', message: 'User not found.' });
 
       res.status(200).json(user);
     } catch (err) {
-      console.error("Error in keepLogin:", err);
+      console.error('Error in keepLogin:', err);
       res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
 
@@ -296,14 +320,14 @@ export class UserController {
       if (!user)
         return res
           .status(400)
-          .json({ status: "error", message: "User not found." });
+          .json({ status: 'error', message: 'User not found.' });
 
       res.status(200).json(user);
     } catch (err) {
-      console.error("Error in userProfile:", err);
+      console.error('Error in userProfile:', err);
       res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
 
@@ -317,7 +341,7 @@ export class UserController {
       if (!user)
         return res
           .status(400)
-          .json({ status: "error", message: "User not found." });
+          .json({ status: 'error', message: 'User not found.' });
 
       let newPath = req.file
         ? await this.handleFileUpload(req.file)
@@ -329,30 +353,30 @@ export class UserController {
         });
         if (existingEmail)
           return res.status(400).json({
-            status: "error",
-            message: "This email is already in use.",
+            status: 'error',
+            message: 'This email is already in use.',
           });
 
         const payload = { id: user.id, email };
-        const token = sign(payload, process.env.KEY_JWT!, { expiresIn: "1h" });
+        const token = sign(payload, process.env.KEY_JWT!, { expiresIn: '1h' });
         const link = `http://localhost:3000/verify/update_email/${token}`;
         const templatePath = path.join(
           __dirname,
-          "../templates",
-          "updateEmail.html"
+          '../templates',
+          'updateEmail.html',
         );
-        const templateSource = fs.readFileSync(templatePath, "utf-8");
+        const templateSource = fs.readFileSync(templatePath, 'utf-8');
         const compiledTemplate = handlebars.compile(templateSource);
         const html = compiledTemplate({ name: user.username, link });
 
         await transporter.sendMail({
           from: process.env.MAIL_USER!,
           to: email,
-          subject: "Update email confirmation",
+          subject: 'Update email confirmation',
           html,
         });
 
-        return res.status(200).json({ status: "update email", email });
+        return res.status(200).json({ status: 'update email', email });
       } else {
         await prisma.user.update({
           where: { id: user.id },
@@ -361,13 +385,13 @@ export class UserController {
             image: newPath,
           },
         });
-        res.status(200).json({ status: "user updated" });
+        res.status(200).json({ status: 'user updated' });
       }
     } catch (err) {
-      console.error("Error in userUpdate:", err);
+      console.error('Error in userUpdate:', err);
       res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
 
@@ -378,8 +402,8 @@ export class UserController {
       });
       if (existingUser)
         return res.status(400).json({
-          status: "error",
-          message: "Email has been used with another account",
+          status: 'error',
+          message: 'Email has been used with another account',
         });
 
       await prisma.user.update({
@@ -387,12 +411,12 @@ export class UserController {
         data: { email: req.body.email },
       });
 
-      res.status(200).json({ status: "ok", message: "Update Email Success" });
+      res.status(200).json({ status: 'ok', message: 'Update Email Success' });
     } catch (err) {
-      console.error("Error in updateEmail:", err);
+      console.error('Error in updateEmail:', err);
       res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
 
@@ -404,33 +428,33 @@ export class UserController {
       if (!user)
         return res
           .status(400)
-          .json({ status: "error", message: "Account not found" });
+          .json({ status: 'error', message: 'Account not found' });
 
       const payload = { id: user.id, email: user.email };
-      const token = sign(payload, process.env.KEY_JWT!, { expiresIn: "1h" });
+      const token = sign(payload, process.env.KEY_JWT!, { expiresIn: '1h' });
       const link = `http://localhost:3000/verify/forget_password/update/${token}`;
       const templatePath = path.join(
         __dirname,
-        "../templates",
-        "resetPassword.html"
+        '../templates',
+        'resetPassword.html',
       );
-      const templateSource = fs.readFileSync(templatePath, "utf-8");
+      const templateSource = fs.readFileSync(templatePath, 'utf-8');
       const compiledTemplate = handlebars.compile(templateSource);
       const html = compiledTemplate({ name: user.username, link });
 
       await transporter.sendMail({
         from: process.env.MAIL_USER!,
         to: req.body.email,
-        subject: "Reset password confirmation",
+        subject: 'Reset password confirmation',
         html,
       });
 
-      res.status(200).json({ status: "ok", message: "Email sent" });
+      res.status(200).json({ status: 'ok', message: 'Email sent' });
     } catch (err) {
-      console.error("Error in resetPassword:", err);
+      console.error('Error in resetPassword:', err);
       res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
 
@@ -440,7 +464,7 @@ export class UserController {
       if (password !== confirm)
         return res
           .status(400)
-          .json({ status: "error", message: "Passwords do not match." });
+          .json({ status: 'error', message: 'Passwords do not match.' });
 
       const salt = await genSalt(10);
       const hashedPassword = await hash(password, salt);
@@ -450,19 +474,19 @@ export class UserController {
         data: { password: hashedPassword },
       });
 
-      res.status(200).json({ status: "ok", message: "Password updated" });
+      res.status(200).json({ status: 'ok', message: 'Password updated' });
     } catch (err) {
-      console.error("Error in updatePassword:", err);
+      console.error('Error in updatePassword:', err);
       res
         .status(500)
-        .json({ status: "error", message: "Internal server error." });
+        .json({ status: 'error', message: 'Internal server error.' });
     }
   }
 
   private handleFileUpload(file: Express.Multer.File): Promise<string> {
     return new Promise((resolve, reject) => {
       const { originalname, path: tempPath } = file;
-      const ext = originalname.split(".").pop();
+      const ext = originalname.split('.').pop();
       const newPath = path.join(tempPath, `.${ext}`);
 
       fs.rename(tempPath, newPath, (err) => {
