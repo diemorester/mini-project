@@ -3,22 +3,28 @@
 import Image from "next/image";
 import { useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
-import VoucherCodeForm from "./_components/promotionCode";
 import { FaChevronLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
+import VoucherCodeForm from "../_components/promotionCode";
+import { useParams } from "next/navigation";
 
 export default function DetailedEvents() {
-  const router = useRouter();
-  const { id } = router.query;
+  // const router = useRouter();
+  // const { id } = router.query;
+  const params = useParams();
+  const id = +params.id;
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
   const [isPointUsed, setIsPointUsed] = useState(false)
   const [pointUse, setPointUse] = useState(0)
-  const [discount, setDiscount] = useState(0)
-  const [subTotal, setSubTotal] = useState(0)
   
   const point = 5000
   const handlePoint = () => setPointUse(point)
+
+  const subTotal = ( isPointUsed == true ) ? `${totalPrice - point}` : `${totalPrice}`
+  
+  const numberTotal = Number(subTotal)
+
   const optionAmount = [{label: "1 Fan", value: 1}, {label: "2 Fans", value: 2}, {label: "3 Fans", value: 3}]
   const onSelectAmount = (item: any) => {
     
@@ -121,11 +127,11 @@ export default function DetailedEvents() {
               </div>
               <div className="flex justify-between sm:px-20">
                 <p>Discount :</p>
-                <p>-Rp30.000</p>
+                <p>0</p>
               </div>
               <div className="flex justify-between sm:px-20">
                 <p>Sub Total :</p>
-                <p>Rp165.000</p>
+                <p>Rp{numberTotal?.toLocaleString('id-ID')}</p>
               </div>
             </div>
             <div className="pt-10 flex justify-center">

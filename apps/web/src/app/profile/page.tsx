@@ -64,6 +64,9 @@ export default function Profile() {
                                 }} className="bg-sept-purple hover:bg-sept-green text-end text-2xl text-sept-white p-3 m-3">Review</button>
                                 <dialog id="my_modal_1" className="modal">
                                     <div className="modal-box">
+                                        <div className="">
+                                            <h2>[ &nbsp; RATE OUR EVENTS &nbsp; &emsp; ]</h2>
+                                        </div>
                                         <div className="rating">
                                             <input type="radio" name="rating-1" className="mask mask-star" defaultChecked />
                                             <input type="radio" name="rating-1" className="mask mask-star" />
