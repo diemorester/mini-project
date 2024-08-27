@@ -74,7 +74,6 @@ export default function Home() {
       </div>
       <Events />
       <PrevEvents />
-      <PromotionOne />
       <WhyUs />
     </div>
   );

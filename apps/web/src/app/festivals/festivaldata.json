@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Festival 1",
+    "description": "Java Jazz Festival is one of the largest jazz festivals in the world and arguably the biggest in the Southern Hemisphere, held in Jakarta, Indonesia. The annual festival was first held in 2005 and has been held every year since. It has featured hundreds of artists from around the world.",
+    "location": "Istora Senayan",
+    "date": "2025-12-31",
+    "Company": "PT. Java Festival Production"
+  },
+  {
+    "id": 2,
+    "name": "Festival 2",
+    "description": "Bali Arts Festival is a cultural event held every year in Bali, Indonesia. The festival features a wide range of traditional and contemporary arts, including dance, music, theater, and visual arts. It is one of the largest and most important cultural events in Bali, attracting thousands of visitors from around the world.",
+    "location": "Bali Arts Center",
+    "date": "2024-06-10",
+    "Company": "PT. Malaya Festival Production"
+  },
+  {
+    "id": 3,
+    "name": "Festival 3",
+    "description": "Sumatra Music Festival is an annual music festival held in Medan, North Sumatra, Indonesia. The festival features a wide range of music genres, including pop, rock, jazz, and traditional Indonesian music. It is one of the largest music festivals in Sumatra and attracts thousands of music lovers from around the region.",
+    "location": "Medan Fair Plaza",
+    "date": "2023-09-15",
+    "Company": "PT. Sumatra Festival Production"
+  },
+  {
+    "id": 4,
+    "name": "Festival 4",
+    "description": "Bali Food Festival is an annual food festival held in Bali, Indonesia. The festival features a wide range of traditional and contemporary Indonesian cuisine, including street food, snacks, and desserts. It is one of the largest food festivals in Bali and attracts thousands of food lovers from around the world.",
+    "location": "Bali Food Center",
+    "date": "2022-11-20",
+    "Company": "PT. Bali Festival Production"
+  },
+  {
+    "id": 5,
+    "name": "Festival 5",
+    "description": "Kalimantan Dance Festival is an annual dance festival held in Kalimantan, Indonesia. The festival features a wide range of traditional and contemporary dance performances, including folk dances, modern dances, and ballet. It is one of the largest dance festivals in Kalimantan and attracts thousands of dance enthusiasts from around the region.",
+    "location": "Kalimantan Dance Center",
+    "date": "2021-08-25",
+    "Company": "PT. Kalimantan Festival Production"
+  },
+  {
+    "id": 6,
+    "name": "Festival 6",
+    "description": "Sulawesi Film Festival is an annual film festival held in Sulawesi, Indonesia. The festival features a wide range of local and international films, including feature films, documentaries, and short films. It is one of the largest film festivals in Sulawesi and attracts thousands of film enthusiasts from around the world.",
+    "location": "Sulawesi Film Center",
+    "date": "2020-10-30",
+    "Company": "PT. Sulawesi Festival Production"
+  },
+  {
+    "id": 7,
+    "name": "Festival 7",
+    "description": "Papua Music Festival is an annual music festival held in Papua, Indonesia. The festival features a wide range of music genres, including traditional Papuan music, pop, rock, and jazz. It is one of the largest music festivals in Papua and attracts thousands of music lovers from around the region.",
+    "location": "Papua Music Center",
+    "date": "2019-07-05",
+    "Company": "PT. Papua Festival Production"
+  },
+  {
+    "id": 8,
+    "name": "Festival 8",
+    "description": "Nusa Tenggara Arts Festival is an annual arts festival held in Nusa Tenggara, Indonesia. The festival features a wide range of traditional and contemporary arts, including dance, music, theater, and visual arts. It is one of the largest arts festivals in Nusa Tenggara and attracts thousands of visitors from around the region.",
+    "location": "Nusa Tenggara Arts Center",
+    "date": "2018-04-15",
+    "Company": "PT. Nusa Tenggara Festival Production"
+  },
+  {
+    "id": 9,
+    "name": "Festival 9",
+    "description": "Maluku Festival is an annual cultural festival held in Maluku, Indonesia. The festival features a wide range of traditional and contemporary arts, including dance, music, theater, and visual arts. It is one of the largest cultural festivals in Maluku and attracts thousands of visitors from around the region.",
+    "location": "Maluku Arts Center",
+    "date": "2017-02-10",
+    "Company": "PT. Maluku Festival Production"
+  },
+  {
+    "id": 10,
+    "name": "Festival 10",
+    "description": "Borneo Festival is an annual festival held in Borneo, Indonesia. The festival features a wide range of traditional and contemporary arts, including dance, music, theater, and visual arts. It is one of the largest cultural festivals in Borneo and attracts thousands of visitors from around the region.",
+    "location": "Borneo Arts Center",
+    "date": "2016-11-25",
+    "Company": "PT. Borneo Festival Production"
+  }
+]

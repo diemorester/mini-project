@@ -4,40 +4,41 @@ import { motion, useAnimation } from "framer-motion";
 const WhyUs = () => {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
   const [showFullText, setShowFullText] = useState(false);
   const [showColoredText, setShowColoredText] = useState(false);
+  const [direction, setDirection] = useState("left");
 
   useEffect(() => {
-    const handleScroll = () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          console.log("Intersection Observer Entry:", entry);
+          if (entry.isIntersecting) {
+            console.log("Element is in view");
+            controls.start("visible");
+            setShowFullText(true);
+            setShowColoredText(true);
+          } else {
+            console.log("Element is out of view");
+            controls.start("hidden");
+            setShowFullText(false);
+            setShowColoredText(false);
+          }
+        });
+      },
+      { threshold: 0.5 } 
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
       if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-
-        
-        if (rect.top >= 0) {
-         
-          controls.start("hidden");
-          setShowFullText(false);
-          setShowColoredText(false);
-        } else {
-          controls.start("visible").then(() => {
-            setTimeout(() => {
-              setShowFullText(true);
-              setShowColoredText(true);
-            }, 600);
-          });
-        }
-
-        setLastScrollTop(scrollTop);
+        observer.unobserve(ref.current);
       }
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [controls, lastScrollTop]);
+  }, [controls]);
 
   const renderTypewriterText = (text: string, className: string) => (
     <span className={`typewriter ${className}`}>
@@ -54,7 +55,9 @@ const WhyUs = () => {
     </span>
   );
 
-  const getRandomDirection = () => (Math.random() > 0.5 ? "left" : "right");
+  useEffect(() => {
+    setDirection(Math.random() > 0.5 ? "left" : "right");
+  }, []);
 
   const textVariants = {
     hidden: (direction: string) => ({
@@ -95,8 +98,8 @@ const WhyUs = () => {
       </div>
       <div className="text-3xl sm:text-7xl text-sept-white bg-sept-black p-5 relative font-semibold py-[100px]">
         <motion.p
-          custom={getRandomDirection()}
           initial="hidden"
+          custom={direction}
           animate={controls}
           variants={textVariants}
           className="text-center"
@@ -107,8 +110,8 @@ const WhyUs = () => {
           &nbsp;UP
         </motion.p>
         <motion.p
-          custom={getRandomDirection()}
           initial="hidden"
+          custom={direction}
           animate={controls}
           variants={textVariants}
           className="text-left sm:pl-52"
@@ -118,8 +121,8 @@ const WhyUs = () => {
           {showColoredText && renderTypewriterText("EVENTS", "text-sept-green")}
         </motion.p>
         <motion.p
-          custom={getRandomDirection()}
           initial="hidden"
+          custom={direction}
           animate={controls}
           variants={textVariants}
           className="text-center"
@@ -128,8 +131,8 @@ const WhyUs = () => {
           AND MAKE IT
         </motion.p>
         <motion.p
-          custom={getRandomDirection()}
           initial="hidden"
+          custom={direction}
           animate={controls}
           variants={textVariants}
           className="text-center"
