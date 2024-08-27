@@ -39,6 +39,7 @@ export default function DetailedEvents() {
     return Math.max(discountedPrice, 0);
   };
 
+
   return (
     <div className="relative overflow-hidden">
       <div className="w-screen h-[500px] bg-sept-black">
