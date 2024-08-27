@@ -10,12 +10,90 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// User
+model User {
+  id          Int      @id @default(autoincrement())
+  fullName    String?
+  company     String?
+  username    String   @unique
+  email       String   @unique
+  password    String
+  image       String?  @db.LongText
+  isActive    Boolean  @default(false)
+  isOrganizer Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  @@map("samples") // if you want to use snake_case format
+  referral  Referral?
+  points    Points[]
+  discounts Discount[]
+  events    Event[]
+  orders    Order[]
+}
+
+// Referral
+model Referral {
+  id           Int    @id @default(autoincrement())
+  referralCode String @unique
+  user         User   @relation(fields: [userId], references: [id])
+  userId       Int    @unique
+}
+
+// Points
+model Points {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  amount         Int
+  expirationDate DateTime
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+// Discount
+model Discount {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  discount       Int
+  expirationDate DateTime
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+// Event
+model Event {
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String
+  location      String
+  image         String?  @db.LongText
+  startDateTime DateTime
+  endDateTime   DateTime
+  price         Int
+  isFree        Boolean  @default(false)
+  categoryId    Int
+  organizerId   Int
+
+  organizer User     @relation(fields: [organizerId], references: [id])
+  category  Category @relation(fields: [categoryId], references: [id])
+  orders    Order[]
+}
+
+// Category
+model Category {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  events Event[]
+}
+
+// Order
+model Order {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  eventId     Int
+  organizerId Int
+  totalAmount Int
+  quantity    Int?     @default(0)
+  createdAt   DateTime @default(now())
+  status      Boolean  @default(false)
+
+  event Event @relation(fields: [eventId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
 }
