@@ -21,7 +21,7 @@ const FestivalItems: React.FC<FestivalItemsProps> = ({
   return (
     <Link className="bg-sept-white w-[80%] h-[250px] gap-2 justify-between flex flex-row overflow-hidden z-30" href={`/festivals/${id}`}>
      
-        <div className="flex flex-col sm:flex-row">
+        <div className="flex flex-row">
           <div className="pl-3 sm:px-8 my-auto">
             <Image
               className="shadow-lg shadow-black/60 w-32 h-auto sm:w-[170px] sm:h-auto"
